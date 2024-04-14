@@ -1,0 +1,84 @@
+---
+title: "Introduction to forecasting"
+subtitle: "WA-BC Chapter of AFS"
+output:
+  html_document:
+    fig_caption: yes
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+---
+
+```{r set_options, echo=FALSE, cache=FALSE}
+options(width = 100)
+```
+
+***
+
+## Background
+
+These are materials for the forecasting workshop presented at the 2024 Annual Meeting of the WA-BC Chapter of the American Fisheries Society in Spokane, WA.
+
+<br>
+
+## Instructors
+
+**Dr. Matt Falcy**   
+Assistant Unit Leader | Idaho Cooperative Fish and Wildlife Research Unit  
+Assistant Professor | Department of Fish and Wildlife Sciences  
+University of Idaho
+
+
+**Dr. Mark Scheuerell**   
+Assistant Unit Leader | Washington Cooperative Fish and Wildlife Research Unit  
+Associate Professor | School of Aquatic and Fishery Sciences  
+University of Washington
+
+<br>
+
+## Date & Location
+
+Monday, April 29, 2024
+
+Hotel Something, Spokane, WA.
+
+<br>
+
+## Schedule & Topics
+
+Links are included after each topic for both the knitted slide deck and the RMarkdown code used to generate them.
+
+### Session 1
+
+__1:00 - 2:30__ 
+
+  * topic 1 | [slides](session_1/lec_01.html) | [Rmd](session_1/lec_01.Rmd)  
+  
+  * topic 2 | [slides](session_1/lec_02.html) | [Rmd](session_1/lec_02.Rmd)  
+
+***
+
+#### Break
+
+__2:30 - 2:45__
+
+***
+
+### Session 2: Introduction to state-space models
+
+__2:45 - 4:30__
+
+  * topic 3 | [slides](session_2/lec_03.html) | [Rmd](session_2/lec_03.Rmd)   
+  
+  * topic 4 | [slides](session_2/lec_04.html) | [Rmd](session_2/lec_04.Rmd)  
+  
+***
+
+### Other resources
+
+ * [Something here](URL)
+
+
+ 
+
