@@ -1,0 +1,10 @@
+.inverse-black {
+  background-color: #191919;
+  color: #FFFFFF;
+}
+.citation {
+    position: absolute;
+    top: 93%;
+    right: 1%;
+  font-size: 1em;
+}
