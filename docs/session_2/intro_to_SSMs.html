@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to Integrated Populations Models</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="WA-BC AFS Meeting Spokane, WA 29 April 2024" />
+    <script src="intro_to_SSMs_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="my-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Introduction to Integrated Populations Models
+]
+.subtitle[
+## Mark Scheuerell
+]
+.author[
+### WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024
+]
+
+---
+
+
+
+
+
+
+
+---
+
+# ESA status reviews
+
+## .blue[Required every 5 years to ensure appropriate protections]
+
+## .blue[Considerations include]
+
+&gt; ### .gray[population trends, distribution, demographics &amp; genetics]
+
+&gt; ### .gray[habitat conditions]
+
+&gt; ### .gray[past conservation measures]
+
+&gt; ### .gray[status &amp; trends of threats]
+
+
+---
+
+class: inverse, center, middle
+
+# Surely listed species are closely monitored?
+
+
+---
+
+class: frimg
+background-image: url(figs/no_evil.jpg)
+background-size: 80%
+
+
+---
+
+class: center
+
+# The data are gappy
+
+&lt;img src="intro_to_SSMs_files/figure-html/data_gappy-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# The data are noisy
+
+&lt;br&gt;
+
+## .center.green[
+non-exhaustive surveys
+]
+## .center.blue[
+undetected individuals
+]
+## .center.orange[
+misidentified individuals
+]
+
+
+---
+
+# The data are disparate
+
+&lt;br&gt;
+
+
+## .center.green[
+direct vs remotely sensed
+]
+## .center.blue[
+design-based vs opportunistic
+]
+## .center.orange[
+scientific surveys vs recreational sampling
+]
+
+
+
+---
+
+class: middle
+
+&gt; # .blue[
+How can we use this information to inform decisions?
+]
+&gt; # .green[
+For trends over time, one option is a state-space model
+]
+
+
+---
+
+# Part 1: State model
+
+## Describes the .blue[true state of nature] over time
+
+&lt;img src="intro_to_SSMs_files/figure-html/state_diag-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# States of nature might be
+
+&lt;br&gt;
+
+
+## .center.green[
+Animal location
+]
+## .center.blue[
+Species density
+]
+## .center.orange[
+Age structure
+]
+## .center.purple[
+Reproductive status
+]
+
+
+---
+
+class: frimg, center, bottom, inverse-black
+background-image: url(figs/venice_carnival.jpg)
+background-size: 100%
+
+## .white[Revealing the true state requires observations]
+
+&lt;br&gt;
+
+---
+
+class: center, middle, inverse
+
+# Observing nature can be easy
+
+---
+
+class: frimg, bottom, right
+background-image: url(figs/sockeye.jpg)
+background-size: cover
+
+# .white[How many sockeye are there?]
+
+---
+
+class: center, middle, inverse
+
+# Observing nature can also be hard
+
+---
+
+class: frimg, bottom, right
+background-image: url(figs/sockeye.jpg)
+background-size: cover
+
+# .white[How many mayflies are there?]
+
+---
+
+# Part 2: Observation model
+
+## .purple[Data] = .blue[Truth] &amp;#177; .red[Errors]
+
+---
+
+# Part 2: Observation model
+
+## .purple[Data] = .blue[Truth] &amp;#177; .red[Errors]
+
+&lt;img src="intro_to_SSMs_files/figure-html/obs_diag-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+
+# Why bother?
+
+---
+
+# Advantages
+
+## 1. Can combine many different .purple[data types]
+
+## .center.purple[
+Changes in observers or sensors
+]
+
+## .center.purple[
+Varying survey locations &amp; effort
+]
+
+## .center.purple[
+Direct &amp; remote sampling  
+]
+
+---
+
+# Advantages
+
+## 2. .gray[Missing data] are easily accommodated
+
+&lt;img src="intro_to_SSMs_files/figure-html/obs_NA-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: frimg
+background-image: url(figs/Jonsen2016.png)
+background-position: 50% 70%
+background-size: 70%
+
+# Advantages
+
+## 3. Improved accuracy &amp; precision
+
+---
+
+class: frimg
+background-image: url(figs/robin.jpg)
+background-position: 50% 80%
+background-size: 30%
+
+# Advantages
+
+## 4. .gray[Data-poor] benefit from .green[data-rich]
+
+
+---
+
+class: inverse, center, middle
+
+# Bull trout in the Pacific Northwest
+
+
+---
+
+# Collaborators
+
+.pull-left[
+
+### .green[ Brett Bowersox (IDFG) ]
+
+### .green[ Dan Brewer (USFWS) ]
+
+### .blue[ Erin Britton-Kuttel (USFWS) ]
+
+### .blue[ Sean Finn (USFWS) ]
+
+### .green[ Stephanie Gunckel (ODFW) ]
+
+]
+
+.pull-right[
+
+### .blue[ Craig Hansen (USFWS) ]
+
+### .blue[ Rebecca Migala (USFWS) ]
+
+### .blue[ Dan Nolfi (USFWS) ]
+
+### .green[ Marie Winkowski (WDFW) ]
+
+### .blue[ Alan Yanahan (USFWS) ]
+
+]
+
+
+---
+
+class: frimg
+background-image: url(figs/bull_trout_art.png)
+background-position: 50% 90%
+background-size: 40%
+
+# Bull trout *Salvelinus confluentus*
+
+&gt; ### .green[
+Native to the Pacific Northwest &amp; Canada
+]
+
+&gt; ### .green[4 different life histories (resident, riverine, lacustrine, anadromous)
+]
+
+&gt; ### .green[ Mature at 4-7 years of age
+]
+
+&gt; ### .green[ Listed as threatened under the ESA in 1999
+]
+
+
+---
+
+class: frimg, inverse-black
+background-image: url(figs/bull_trout_range_map.jpg)
+background-position: 50% 50%
+background-size: 75%
+
+
+---
+
+class: inverse, center, middle
+
+# Model for the state of nature
+
+
+---
+
+# Simple model of population dynamics
+
+### .blue.center[Exponential growth/decline in continuous time]
+
+`$$\huge{N(t) = N_0 ~ \underbrace{\exp(u)}_{\substack{\text{rate of} \\ \text{change}}} \underbrace{\exp(w t)}_{\substack{\text{stochastic} \\ \text{environment}}}}$$`
+
+
+---
+
+# Simple model of population dynamics
+
+### .blue.center[In discrete time, with a time step of 1 year]
+
+`$$\huge{N_t = N_{t-1} \exp(u + w_t)}$$`
+
+
+---
+
+# Simple model of population dynamics
+
+### .blue.center[In discrete time, with a time step of 1 year]
+
+`$$\huge{N_t = N_{t-1} \exp(u + w_t)}$$`
+
+### .blue.center[such that on a log scale]
+
+`$$\huge{\log (N_t) = \log (N_{t-1}) + u + w_t}$$`
+
+### .blue.center[which we can rewrite as]
+
+`$$\huge{x_t = x_{t-1} + u + w_t}$$`
+
+
+---
+
+# Biased random walk
+
+### .blue.center[If we assume that the errors are white noise]
+
+`$$\huge{w_t \sim \text{N}(0, q)}$$`
+
+
+---
+
+# Biased random walk
+
+### .blue.center[If we assume that the errors are white noise]
+
+`$$\huge{w_t \sim \text{N}(0, q)}$$`
+
+### .blue.center[ then our model of populations dynamics]
+
+`$$\huge{x_t = x_{t-1} + u + w_t}$$`
+
+### .center[.blue[is a] *biased random walk*]
+
+
+---
+
+# Examples of biased random walks
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_biased_rw-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: inverse, center, middle
+
+# Observation (data) model
+
+
+---
+
+# Observation model
+
+### .blue[ In log-space ]
+
+`$$\huge{\underbrace{y_t}_{\substack{\text{observed} \\ \text{counts}}} = \underbrace{x_t}_{\substack{\text{true} \\ \text{counts}}} + \underbrace{v_t}_{\substack{\text{observer} \\ \text{error}}} ~~ \text{with} ~~ v_t \sim \text{N}(0, r)}$$`
+
+
+---
+
+# Biased random walks with obs error
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_biased_rw_y-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: inverse, center, middle
+
+# Multiple time series of abundance
+
+
+---
+
+class: center
+
+&lt;br&gt;
+
+# The survey data are hierarchical
+
+## .blue[ 4 states ]
+
+## .purple[ 6 recovery units ]
+
+## .orange[ 62 core areas ]
+
+## .green[ 242 populations ]
+
+
+---
+
+# State model for multiple core areas
+
+## .center.blue[ Each _core area_ gets its own model ]
+
+`$$\huge{\begin{gathered}
+    x_{1,t} = x_{1,t-1} + u_1 + w_{1,t} \\
+    x_{2,t} = x_{2,t-1} + u_2 + w_{2,t} \\
+    x_{3,t} = x_{3,t-1} + u_3 + w_{3,t} \\
+    \vdots \\
+    x_{62,t} = x_{62,t-1} + u_{62} + w_{62,t} \\
+  \end{gathered}}$$`
+
+
+---
+
+# Observation model for multiple time series
+
+&gt; ## .blue[ Core areas comprise 1-22 populations ]
+
+&gt; ## .blue[ Each population is considered an observation from its respective core area ]
+
+
+---
+
+# Observation model for multiple time series
+
+## .center.blue[ Example of 5 popns across 2 core areas (A &amp; B) ]
+
+`$$\huge{\begin{gathered}
+    y_{1,t} = x_{A,t} + v_{1,t} \\
+    y_{2,t} = x_{A,t} + v_{2,t} \\
+    \hline 
+    y_{3,t} = x_{B,t} + v_{3,t} \\
+    y_{4,t} = x_{B,t} + v_{4,t} \\
+    y_{5,t} = x_{B,t} + v_{5,t}
+  \end{gathered}}$$`
+
+---
+
+# Example: 3 observations of a common state
+
+&lt;img src="intro_to_SSMs_files/figure-html/multi_obs-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: frimg
+background-image: url(figs/bulltrout_sampling.png)
+background-position: 50% 70%
+background-size: 80%
+
+# Varying sampling methods
+
+
+---
+
+class: center, middle, inverse
+
+# Multiple surveys of each type&lt;br&gt;help inform the variance estimates 
+
+
+---
+
+# Observation model for multiple time series
+
+## .center.blue[ Example of 5 popns from 2 core areas (_A_, _B_) ]
+
+`$$\huge{\begin{gathered}
+    y_{1,t} = x_{A,t} + v_{1,t} \\
+    y_{2,t} = x_{A,t} + v_{2,t} \\
+    \hline 
+    y_{3,t} = x_{B,t} + v_{3,t} \\
+    y_{4,t} = x_{B,t} + v_{4,t} \\
+    y_{5,t} = x_{B,t} + v_{5,t}
+  \end{gathered}}$$`
+
+
+---
+
+# Observation errors for multiple time series
+
+## .center.blue[ Example of 5 popns from 2 core areas via 2 methods (_j_, _k_)]
+
+`$$\huge{\begin{gathered}
+    y_{1,t} = x_{A,t} + v_{1,t} \\
+    y_{2,t} = x_{A,t} + v_{2,t} \\
+    \hline 
+    y_{3,t} = x_{B,t} + v_{3,t} \\
+    y_{4,t} = x_{B,t} + v_{4,t} \\
+    y_{5,t} = x_{B,t} + v_{5,t}
+  \end{gathered}}
+  ~~~~~~~~~~~
+  \huge{\begin{gathered}
+    v_{1,t} \sim \text{N}(0, r_j) \\
+    v_{2,t} \sim \text{N}(0, r_k) \\
+    \hline 
+    v_{3,t} \sim \text{N}(0, r_k) \\
+    v_{4,t} \sim \text{N}(0, r_k) \\
+    v_{5,t} \sim \text{N}(0, r_j)
+  \end{gathered}}$$`
+
+
+---
+
+# Fitting the models
+
+&gt; ## .blue[ Used the 30-year time period from 1991-2020 ]
+
+&gt; ## .blue[ Time series needed &amp;ge;10 years of non-missing data ]
+
+
+---
+
+# Fitting the models
+
+&gt; ## .blue[ Used the 30-year time period from 1991-2020 ]
+
+&gt; ## .blue[ Time series needed &amp;ge;10 years of non-missing data ]
+
+&gt; ## .green[ All models fit in **R** using the `{MARSS}` package ]
+
+&gt; ## .green[ Estimated 90% confidence intervals on bias terms ]
+
+
+---
+
+# Bias in trends
+
+&gt; ## .blue[ 37/62 core areas had a negative trend ]
+
+## .center.blue[ but only 3/62 were "significantly" negative ]
+
+
+---
+
+class: frimg, center
+background-image: url(figs/kootenai.png)
+background-position: 40% 75%
+background-size: 65%
+
+# Example of a significant decline
+
+
+---
+
+class: frimg, center
+background-image: url(figs/stillaguamish.png)
+background-position: 40% 75%
+background-size: 65%
+
+# Example of a significant decline
+
+
+---
+
+# Bias in trends
+
+&gt; ## .blue[ 37/62 core areas had a negative trend ]
+
+## .center.blue[ but only 3/62 were "significantly" negative ]
+
+&lt;br&gt;
+
+&gt; ## .green[ 25/62 core areas had a positive trend ]
+
+## .center.green[ but only 5/62 were "significantly" positive ]
+
+
+---
+
+class: frimg, center
+background-image: url(figs/lower_deschutes.png)
+background-position: 40% 75%
+background-size: 65%
+
+# Example of a significant increase
+
+
+---
+
+class: frimg, center
+background-image: url(figs/upper_whitefish.png)
+background-position: 40% 75%
+background-size: 65%
+
+# Example of a significant increase
+
+
+---
+
+class: frimg, center
+background-image: url(figs/skokomish.png)
+background-position: 40% 75%
+background-size: 65%
+
+# Example of no systematic trend
+
+
+---
+
+class: inverse, center, middle
+
+# Data quality influences our ability&lt;br&gt;to estimate biases
+
+---
+
+class: frimg, center
+background-image: url(figs/big_salmon.png)
+background-position: 40% 75%
+background-size: 65%
+
+# Example of a data-poor core area
+
+
+---
+
+class: frimg, center
+background-image: url(figs/flathead.png)
+background-position: 40% 75%
+background-size: 65%
+
+# Example of a data-rich core area
+
+
+---
+
+# Big picture
+
+&gt; ## .blue[
+Status of bull trout in the Pacific Northwest is mixed 
+]
+
+
+---
+
+# Big picture
+
+&gt; ## .blue[
+Status of bull trout in the Pacific Northwest is mixed 
+]
+
+&gt; ## .blue[
+Data quality affects our ability to assess trends
+]
+
+
+---
+
+# Big picture
+
+&gt; ## .blue[
+Status of bull trout in the Pacific Northwest is mixed 
+]
+
+&gt; ## .blue[
+Data quality affects our ability to assess trends
+]
+
+&gt; ## .blue[
+State-space models can help 
+]
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
