@@ -41,37 +41,43 @@ University of Washington
 
 Monday, April 29, 2024
 
-Hotel Something, Spokane, WA.
+Riverfront A, Centennial Hotel
+
+Spokane, WA
 
 <br>
 
 ## Schedule & Topics
 
-Links are included after each topic for both the knitted slide deck and the RMarkdown code used to generate them.
+Links are included after each topic.
 
-### Session 1
+### Session 1 - Background & Fundamentals
 
-__1:00 - 2:30__ 
+__8:00 - 9:40__ 
 
-  * topic 1 | [slides](session_1/lec_01.html) | [Rmd](session_1/lec_01.Rmd)  
+  * topic 1 | [materials](session_1/lec_01.html)
   
-  * topic 2 | [slides](session_1/lec_02.html) | [Rmd](session_1/lec_02.Rmd)  
+  * topic 2 | [materials](session_1/lec_02.html)
 
+  * topic 3 | [materials](session_1/lec_03.html)
+  
 ***
 
 #### Break
 
-__2:30 - 2:45__
+__9:40 - 10:00__
 
 ***
 
-### Session 2: Introduction to state-space models
+### Session 2 - Evaluation & Assessment
 
-__2:45 - 4:30__
+__10:00 - 12:00__
 
-  * topic 3 | [slides](session_2/lec_03.html) | [Rmd](session_2/lec_03.Rmd)   
+  * topic 4 | [materials](session_2/lec_04.html)
   
-  * topic 4 | [slides](session_2/lec_04.html) | [Rmd](session_2/lec_04.Rmd)  
+  * topic 5 | [materials](session_2/lec_05.html)
+  
+  * topic 6 | [materials](session_2/lec_06.html)
   
 ***
 
