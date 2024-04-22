@@ -1,0 +1,188 @@
+---
+title: "Introduction to Integrated Populations Models"
+subtitle: "Mark Scheuerell"  
+# subtitle: "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"  
+author: "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"
+#  - "Mark Scheuerell"
+#  - "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"
+# date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: ["xaringan-themer.css", "my-theme.css"]
+    nature:
+      slideNumberFormat: ""
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      # countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=8, fig.height=4, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = FALSE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+
+## set random seed
+set.seed(666)
+
+## load {icons} for font awesome
+library(icons)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo(
+  primary_color = "#FFFFFF",
+  secondary_color = "#23395b",
+  # secondary_color = "#FF961C",
+  title_slide_text_color = "#FFFFFF",
+  title_slide_background_color = "#23395b",
+  colors = c(
+    red = "#f34213",
+    purple = "#844870",
+    orange = "#FF961C",
+    green = "#339933",
+    white = "#FFFFFF",
+    blue = "#488fdf",
+    aqua = "#80cdc1",
+    gray = "#808080",
+    lightgray = "#bdbdbd"
+),
+  header_font_google = google_font("Roboto Condensed", "400", "400i", "700"),
+  text_font_google = google_font("Cabin", "400", "400i", "700"),
+)
+```
+
+
+---
+
+class: black-back
+background-image: url(figs/skagit.png)
+background-position: 70% 50%
+background-size: 75%
+
+# Skagit<br>River
+
+---
+
+# Characterize uncertainty between steelhead
+
+## .blue[1) spawners and offspring]
+
+## .green[2) productivity and environmental conditions]
+
+---
+
+# Skagit River steelhead
+
+## .right.blue[Escapement, harvest & age data from 1978-2018]
+
+## .right.green[Effects of streamflows & hatchery releases]
+
+---
+
+# Integrated population model
+
+## .blue.under[State model]
+
+## .blue[Offspring] = f(.blue[Spawners], .green[Streamflows], .orange[Hatchery fish])
+
+---
+
+# Integrated population model
+
+## .blue.under[State model]
+
+## .blue[Offspring] = f(.blue[Spawners], .green[Streamflows], .orange[Hatchery fish])
+
+## .purple.under[Observation models]
+
+## .purple[Spawners] = g(.blue[Spawners], .gray[Harvest])
+
+## .purple[Ages] = h(.blue[Offspring])
+
+---
+
+class: frimg, center
+background-image: url(figs/flow_effects_summer.png)
+background-position: 50% 55%
+background-size: 85%
+
+# Flow effects on productivity
+
+.citation.gray[Scheuerell et al. (2021)]
+
+---
+
+class: frimg, center
+background-image: url(figs/flow_effects_winter.png)
+background-position: 50% 50%
+background-size: 85%
+
+# Flow effects on productivity
+
+.citation.gray[Scheuerell et al. (2021)]
+
+---
+
+class: frimg, center
+background-image: url(figs/H_effects.png)
+background-position: 50% 55%
+background-size: 85%
+
+# Hatchery effect on productivity
+
+.citation.gray[Scheuerell et al. (2021)]
+
+---
+
+class: frimg, center
+background-image: url(figs/BH_form.png)
+background-position: 50% 77%
+background-size: 63%
+
+# Theoretical parent-offspring relationship
+
+---
+
+class: frimg, center
+background-image: url(figs/SR_relationship.png)
+background-position: 50% 65%
+background-size: 67%
+
+# Real parent-offspring relationship
+
+.citation.gray[Scheuerell et al. (2021)]
+
+---
+
+class: frimg, center
+background-image: url(figs/ref_points0.png)
+background-position: 50% 60%
+background-size: 65%
+
+# Optimal escapement for targeting MSY
+
+.citation.gray[Scheuerell et al. (2021)]
+
+---
+
+class: frimg, center
+background-image: url(figs/ref_points.png)
+background-position: 50% 60%
+background-size: 65%
+
+# Co-management is conservation minded
+
+.citation.gray[Scheuerell et al. (2021)]
+
+
+
+
