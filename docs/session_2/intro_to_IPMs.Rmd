@@ -1,11 +1,10 @@
 ---
 title: "Introduction to Integrated Populations Models"
-subtitle: "Mark Scheuerell"  
+# subtitle: "Mark Scheuerell"  
 # subtitle: "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"  
-author: "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"
+author: 
 #  - "Mark Scheuerell"
-#  - "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"
-# date: '`r Sys.Date()`'
+  - "_WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024_"
 output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css", "my-theme.css"]
@@ -60,10 +59,239 @@ style_duo(
 )
 ```
 
+class: center, middle, inverse
+
+# RUN RECONSTRUCTION:
+
+# Classical approach
 
 ---
 
-class: black-back
+class: center
+background-image: url(figs/ipm_1.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+class: center
+background-image: url(figs/ipm_2b.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+$$\Large ~~~~~~~~~~~~~ N_{y,a} = p_a S_y$$
+
+---
+
+class: center
+background-image: url(figs/ipm_3.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+class: center
+background-image: url(figs/ipm_4.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+class: center
+background-image: url(figs/ipm_5.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+class: center
+background-image: url(figs/ipm_6.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Build a brood table
+
+---
+
+# Problems with this approach
+
+### .blue[1) Spawner counts are not exhaustive & contain errors]
+
+
+---
+
+# Covariate measured with error
+
+### .center.blue[Ricker model]
+
+$$\Large R_t = \alpha S_t \exp (- \beta S_t + \epsilon_t)$$
+
+
+---
+
+# Covariate measured with error
+
+### .center.blue[Ricker model]
+
+$$\Large R_t = \alpha S_t \exp (- \beta S_t + \epsilon_t) \\ 
+\Large \Downarrow \\
+\Large \log \left( \frac{R_t}{S_t} \right) = \log (\alpha) - \beta \underline{S_t} + \epsilon_t \\
+\Large \Downarrow \\
+\Large y_i = \alpha + \beta \underline{x_i} + \epsilon_i$$
+
+
+---
+
+# Problems with this approach
+
+### .blue[1) Spawner counts are not exhaustive & contain errors]
+
+### .green[2) Age-composition data are typically non-exhaustive & imprecise]
+
+
+---
+
+class: center
+background-image: url(figs/ipm_2b.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Typical age expansion
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+### .blue[&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Fish sampled for age comp << total return!]
+
+---
+
+# Problems with this approach
+
+### .blue[1) Spawner counts are not exhaustive & contain errors]
+
+### .green[2) Age-composition data are typically non-exhaustive & imprecise]
+
+### .orange[3) Missing data cause problems]
+
+---
+
+class: center
+background-image: url(figs/ipm_7.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Problems with missing data
+
+---
+
+class: center
+background-image: url(figs/ipm_8.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Problems with missing data
+
+---
+
+class: center
+background-image: url(figs/ipm_9b.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Problems with missing data
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+### .red[We just lost 4 pairs of missing data!]
+
+---
+
+# Problems with this approach
+
+### .blue[1) Spawner counts are not exhaustive & contain errors]
+
+### .green[2) Age-composition data are typically non-exhaustive & imprecise]
+
+### .orange[3) Missing data cause problems]
+
+### .purple[4) Stock-Recruit models are process models, not observation models]
+
+---
+
+class: center
+background-image: url(figs/ipm_10b.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Observation model
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+### .red[Time-ordering is irrelevant; estimated] $\color{#F34213}{R_1}$ .red[has no effect on any later] $\color{#F34213}{S_t}$
+
+
+---
+
+class: center, middle, inverse
+
+# Integrated population models
+
+
+---
+
+class: center
+background-image: url(figs/ipm_11.png)
+background-position: 50% 50%
+background-size: 90%
+
+
+---
+
+class: center
+background-image: url(figs/ipm_12.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Title
+
+---
+
+class: center
+background-image: url(figs/ipm_13.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Title
+
+---
+
+class: center
+background-image: url(figs/ipm_14.png)
+background-position: 50% 50%
+background-size: 90%
+
+# Title
+
+---
+
+class: center, middle, inverse
+
+# EXAMPLE: Skagit River
+
+---
+
+class: left
 background-image: url(figs/skagit.png)
 background-position: 70% 50%
 background-size: 75%
