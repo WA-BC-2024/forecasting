@@ -22,10 +22,11 @@ University of Washington
 
 ### Location
 
-Hotel Name
+Riverfront A Ballroom  
+Centennial Hotel  
 Spokane, WA
 
 ### Date & time
 
 Monday, April 29
-1:00 - 4:00 PM
+8:00 AM - 12:00 PM
