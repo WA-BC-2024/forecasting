@@ -219,10 +219,30 @@ class: center, middle, inverse
 
 # Integrated population models
 
-### 😃 &amp;nbsp; .blue[Do make the model outputs match the data]
+### &amp;nbsp; &amp;nbsp; &amp;nbsp; 😃 &amp;nbsp; .blue[Do make the model match the data]
 
-### 😱 &amp;nbsp; .red[Don't pre-process the data to match the model]
+### &amp;nbsp; &amp;nbsp; &amp;nbsp; 😱 &amp;nbsp; .red[Don't pre-process the data to match the model]
 
+
+---
+
+background-image: url(figs/sorel_ipm.png)
+background-position: 50% 50%
+background-size: 60%
+
+# 😃
+
+.citation[Sorel et al (2024) CJFAS]
+
+---
+
+background-image: url(figs/jorgensen_lcm.png)
+background-position: 50% 50%
+background-size: 75%
+
+# 😱
+
+.citation[Jorgensen et al (2021) PLoS ONE]
 
 ---
 
@@ -303,20 +323,26 @@ background-size: 90%
 ### .pull-right.blue[True spawners are difference&lt;br&gt;between returns and catch]
 
 
+---
+
+# Observation models for spawners
+
+### .pull-left.center[True spawners]
+
+### .pull-right[&amp;nbsp;]
+
+.pull-left[$$\Large S_t = N_t - C_t$$]
+
+### .pull-right.blue[True spawners are difference&lt;br&gt;between returns and catch]
+
+
 ### .pull-left.center[&lt;br&gt;&lt;br&gt;&lt;br&gt;Observed spawners]
 
 ### .pull-right[&lt;br&gt;&lt;br&gt;&lt;br&gt;&amp;nbsp;]
 
-.pull-left[$$\Large \log E_t = \text{N}(\log S_t, \sigma_S)$$]
+.pull-left[$$\Large \log E_t \sim \text{N}(\log S_t, \sigma_S)$$]
 
 ### .pull-right.green[Measured escapement is&lt;br&gt;estimate of true spawners]
-
-
----
-
-# Observation models for age-comp
-
-`$$\Large D_t = \sum_a O_{a,t}$$`
 
 
 ---
@@ -327,20 +353,64 @@ background-size: 90%
 
 ### .pull-right[&amp;nbsp;]
 
-.pull-left[$$\Large D_t = \sum_a O_{a,t}$$]
+&lt;div style="float: left; width: 47%;"&gt;$$\Large D_t = \sum_a O_{a,t}$$&lt;/div&gt;
 
 ### .pull-right.blue[Number of fish observed&lt;br&gt;in age class _a_ in year _t_]
 
 
 ---
 
-### .pull-left.center[&lt;br&gt;&lt;br&gt;&lt;br&gt;Proportion by age]
+# Observation models for age-comp
 
-### .pull-right[&lt;br&gt;&lt;br&gt;&lt;br&gt;&amp;nbsp;]
+### .pull-left.center[Total returns]
 
-.pull-left[$$\Large \pi_t =$$]
+### .pull-right[&amp;nbsp;]
 
-### .pull-right.green[Number of fish predicted&lt;br&gt;in age class _a_ in year _t_]
+&lt;div style="float: left; width: 47%;"&gt;$$\Large D_t = \sum_a O_{a,t}$$&lt;/div&gt;
+
+### .pull-right.blue[Number of fish observed&lt;br&gt;in age class _a_ in year _t_]
+
+
+
+&lt;div style="clear: left; width: 47%;"&gt;&lt;br&gt;&lt;/div&gt;
+
+### .pull-left.center[Proportion by age]
+
+### .pull-right[&amp;nbsp;&lt;br&gt;]
+
+&lt;div style="float: left; width: 47%;"&gt;$$\Large \pi_{a,t} = \frac{N_{a,t}}{\sum_a N_{a,t}}$$&lt;/div&gt;
+
+### &lt;div style="float: right; padding: 15px; color: green; width: 46%;"&gt;Number of fish predicted&lt;br&gt;in age class _a_ in year _t_&lt;/div&gt;
+
+
+---
+
+# Observation models for age-comp
+
+### .pull-left.center[Total returns]
+
+### .pull-right[&amp;nbsp;]
+
+&lt;div style="float: left; width: 47%;"&gt;$$\Large D_t = \sum_a O_{a,t}$$&lt;/div&gt;
+
+### .pull-right.blue[Number of fish observed&lt;br&gt;in age class _a_ in year _t_]
+
+
+
+&lt;div style="clear: left; width: 47%;"&gt;&lt;br&gt;&lt;/div&gt;
+
+### .pull-left.center[Proportion by age]
+
+### .pull-right[&amp;nbsp;&lt;br&gt;]
+
+&lt;div style="float: left; width: 47%;"&gt;$$\Large \pi_{a,t} = \frac{N_{a,t}}{\sum_a N_{a,t}}$$&lt;/div&gt;
+
+### &lt;div style="float: right; padding: 15px; color: green; width: 46%;"&gt;Number of fish predicted&lt;br&gt;in age class _a_ in year _t_&lt;/div&gt;
+
+&lt;div style="clear: left; width: 47%;"&gt;&lt;br&gt;&lt;/div&gt;
+
+`$$\Large \mathbf{O}_t \sim \text{Multinomial}(\boldsymbol{\pi}_t, D_t)$$`
+
 
 
 ---
