@@ -217,9 +217,18 @@ class: center, middle, inverse
 
 ---
 
+# Integrated population models
+
+### 😃 &amp;nbsp; .blue[Do make the model outputs match the data]
+
+### 😱 &amp;nbsp; .red[Don't pre-process the data to match the model]
+
+
+---
+
 class: center
 background-image: url(figs/ipm_11.png)
-background-position: 50% 50%
+background-position: 50% 80%
 background-size: 90%
 
 
@@ -230,7 +239,34 @@ background-image: url(figs/ipm_12.png)
 background-position: 50% 50%
 background-size: 90%
 
-# Title
+# Creating recruits from spawners
+
+
+---
+
+# Forms for stock-recruit model
+
+### .center.blue[Ricker model with autocorrelated errors]
+
+`$$\Large R_t = \alpha S_t \exp (- \beta S_t + \epsilon_t) \\ 
+\Large \Downarrow \\
+\Large \log (R_t) = \log (\alpha) + \log(S_t) - \beta S_t + \epsilon_t$$`
+
+`$$\Large \epsilon_t \sim \text{N}(\phi \epsilon_{t-1}, q)$$`
+
+
+---
+
+# Forms for stock-recruit model
+
+### .center.blue[Ricker model with covariates]
+
+`$$\Large R_t = \alpha S_t \exp (- \beta S_t + \gamma X_{t-h} + \epsilon_t) \\ 
+\Large \Downarrow \\
+\Large \log (R_t) = \log (\alpha) + \log(S_t) - \beta S_t + \gamma X_{t-h} + \epsilon_t$$`
+
+`$$\Large \epsilon_t \sim \text{N}(\phi \epsilon_{t-1}, q)$$`
+
 
 ---
 
@@ -239,7 +275,73 @@ background-image: url(figs/ipm_13.png)
 background-position: 50% 50%
 background-size: 90%
 
-# Title
+# Projecting recruits forward
+
+
+---
+
+# Projecting recruits forward
+
+&lt;br&gt;
+
+### .center.blue[recruits-by-age = (proportion-by-age) &amp;times; (total recruits)]
+
+&lt;br&gt;
+
+`$$\LARGE N_{a,t} = p_{a, t-a} R_{t-a}$$`
+
+---
+
+# Observation models for spawners
+
+### .pull-left.center[True spawners]
+
+### .pull-right[&amp;nbsp;]
+
+.pull-left[$$\Large S_t = N_t - C_t$$]
+
+### .pull-right.blue[True spawners are difference&lt;br&gt;between returns and catch]
+
+
+### .pull-left.center[&lt;br&gt;&lt;br&gt;&lt;br&gt;Observed spawners]
+
+### .pull-right[&lt;br&gt;&lt;br&gt;&lt;br&gt;&amp;nbsp;]
+
+.pull-left[$$\Large \log E_t = \text{N}(\log S_t, \sigma_S)$$]
+
+### .pull-right.green[Measured escapement is&lt;br&gt;estimate of true spawners]
+
+
+---
+
+# Observation models for age-comp
+
+`$$\Large D_t = \sum_a O_{a,t}$$`
+
+
+---
+
+# Observation models for age-comp
+
+### .pull-left.center[Total returns]
+
+### .pull-right[&amp;nbsp;]
+
+.pull-left[$$\Large D_t = \sum_a O_{a,t}$$]
+
+### .pull-right.blue[Number of fish observed&lt;br&gt;in age class _a_ in year _t_]
+
+
+---
+
+### .pull-left.center[&lt;br&gt;&lt;br&gt;&lt;br&gt;Proportion by age]
+
+### .pull-right[&lt;br&gt;&lt;br&gt;&lt;br&gt;&amp;nbsp;]
+
+.pull-left[$$\Large \pi_t =$$]
+
+### .pull-right.green[Number of fish predicted&lt;br&gt;in age class _a_ in year _t_]
+
 
 ---
 
@@ -248,7 +350,7 @@ background-image: url(figs/ipm_14.png)
 background-position: 50% 50%
 background-size: 90%
 
-# Title
+# Feedback between R &amp; S
 
 ---
 
