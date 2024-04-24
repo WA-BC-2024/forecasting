@@ -75,13 +75,13 @@ class: center
 &lt;br&gt;
 
 ## .center.green[
-non-exhaustive surveys
+Non-exhaustive surveys
 ]
 ## .center.blue[
-undetected individuals
+Undetected individuals
 ]
 ## .center.orange[
-misidentified individuals
+Misidentified individuals
 ]
 
 
@@ -93,13 +93,13 @@ misidentified individuals
 
 
 ## .center.green[
-direct vs remotely sensed
+Direct vs remotely sensed
 ]
 ## .center.blue[
-design-based vs opportunistic
+Design-based vs opportunistic
 ]
 ## .center.orange[
-scientific surveys vs recreational sampling
+Scientific surveys vs recreational sampling
 ]
 
 
@@ -128,9 +128,6 @@ For trends over time, one option is a state-space model
 
 # States of nature might be
 
-&lt;br&gt;
-
-
 ## .center.green[
 Animal location
 ]
@@ -147,6 +144,26 @@ Reproductive status
 
 ---
 
+# Changes in the state of nature
+
+## .blue[Generally driven by a combination of]
+
+ ## .blue[&amp;#x2022; intrinsic (eg, fecundity)]
+
+ ## .blue[&amp;#x2022; extrinsic factors (eg, temperature)]
+
+
+---
+
+# Process errors
+
+## .blue[Some of the extrinsic drivers may be unknown]
+
+## .blue[We often call these unknown extrinsic factors] _process errors_
+
+
+---
+
 class: frimg, center, bottom, inverse-black
 background-image: url(figs/venice_carnival.jpg)
 background-size: 100%
@@ -154,6 +171,24 @@ background-size: 100%
 ## .white[Revealing the true state requires observations]
 
 &lt;br&gt;
+
+
+---
+
+# Observation (sampling) errors
+
+## .blue[Collecting data depends on many factors]
+
+### &amp;#x2022; Environmental conditions (eg, cloud cover)
+
+### &amp;#x2022; Behavior (eg, threat avoidance)
+
+### &amp;#x2022; Demographics (age, sex, maturity)
+
+### &amp;#x2022; Sampling design/coverage
+
+### &amp;#x2022; Observer skill
+
 
 ---
 
@@ -187,13 +222,13 @@ background-size: cover
 
 # Part 2: Observation model
 
-## .purple[Data] = .blue[Truth] &amp;#177; .red[Errors]
+&lt;br&gt;
+
+# .center[.purple[Data] = .blue[Truth] &amp;#177; .red[Errors]]
 
 ---
 
 # Part 2: Observation model
-
-## .purple[Data] = .blue[Truth] &amp;#177; .red[Errors]
 
 &lt;img src="intro_to_SSMs_files/figure-html/obs_diag-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
 
@@ -254,458 +289,221 @@ background-size: 30%
 
 ---
 
-class: inverse, center, middle
+# State-space model | General form
 
-# Bull trout in the Pacific Northwest
+## .blue[State model (autoregressive)]
 
+`\(\Large x_t = f(x_{t-1}, \text{process error})\)`
 
----
+&lt;br&gt;
 
-# Collaborators
+## .purple[Observation model]
 
-.pull-left[
-
-### .green[ Brett Bowersox (IDFG) ]
-
-### .green[ Dan Brewer (USFWS) ]
-
-### .blue[ Erin Britton-Kuttel (USFWS) ]
-
-### .blue[ Sean Finn (USFWS) ]
-
-### .green[ Stephanie Gunckel (ODFW) ]
-
-]
-
-.pull-right[
-
-### .blue[ Craig Hansen (USFWS) ]
-
-### .blue[ Rebecca Migala (USFWS) ]
-
-### .blue[ Dan Nolfi (USFWS) ]
-
-### .green[ Marie Winkowski (WDFW) ]
-
-### .blue[ Alan Yanahan (USFWS) ]
-
-]
+`\(\Large y_t = g(x_t, \text{observation error})\)`
 
 
 ---
 
-class: frimg
-background-image: url(figs/bull_trout_art.png)
-background-position: 50% 90%
-background-size: 40%
+# State-space model | Random walk
 
-# Bull trout *Salvelinus confluentus*
+## .blue[State model]
 
-&gt; ### .green[
-Native to the Pacific Northwest &amp; Canada
-]
+`\(\Large x_t = x_{t-1} + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
 
-&gt; ### .green[4 different life histories (resident, riverine, lacustrine, anadromous)
-]
+&lt;br&gt;
 
-&gt; ### .green[ Mature at 4-7 years of age
-]
+## .purple[Observation model]
 
-&gt; ### .green[ Listed as threatened under the ESA in 1999
-]
+`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
 
 
 ---
 
-class: frimg, inverse-black
-background-image: url(figs/bull_trout_range_map.jpg)
-background-position: 50% 50%
-background-size: 75%
+# State-space model | Biased random walk
+
+## .blue[State model]
+
+`\(\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
 
 
 ---
 
-class: inverse, center, middle
+# State-space model | Mean-reverting
 
-# Model for the state of nature
+## .blue[State model]
 
+`\(\Large x_t = b x_{t-1} + w_t ~~~~~~~~~~ |b| &lt; 1 ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
 
----
+&lt;br&gt;
 
-# Simple model of population dynamics
+## .purple[Observation model]
 
-### .blue.center[Exponential growth/decline in continuous time]
-
-`$$\huge{N(t) = N_0 ~ \underbrace{\exp(u)}_{\substack{\text{rate of} \\ \text{change}}} \underbrace{\exp(w t)}_{\substack{\text{stochastic} \\ \text{environment}}}}$$`
-
-
----
-
-# Simple model of population dynamics
-
-### .blue.center[In discrete time, with a time step of 1 year]
-
-`$$\huge{N_t = N_{t-1} \exp(u + w_t)}$$`
+`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
 
 
 ---
 
-# Simple model of population dynamics
+# Consider these data
 
-### .blue.center[In discrete time, with a time step of 1 year]
-
-`$$\huge{N_t = N_{t-1} \exp(u + w_t)}$$`
-
-### .blue.center[such that on a log scale]
-
-`$$\huge{\log (N_t) = \log (N_{t-1}) + u + w_t}$$`
-
-### .blue.center[which we can rewrite as]
-
-`$$\huge{x_t = x_{t-1} + u + w_t}$$`
+&lt;img src="intro_to_SSMs_files/figure-html/ex_bias_rw-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Biased random walk
+# Two model options
 
-### .blue.center[If we assume that the errors are white noise]
+## .blue[1) Linear regression] 
 
-`$$\huge{w_t \sim \text{N}(0, q)}$$`
+`\(\Large y_t = \alpha + \beta t + e_t\)`
+
+&lt;br&gt;
+
+## .green[2) Biased random walk]
+
+`\(\Large x_t = x_{t-1} + u + e_t\)`
 
 
 ---
 
-# Biased random walk
+# Model options | Linear regression
 
-### .blue.center[If we assume that the errors are white noise]
+## .blue[State model]
 
-`$$\huge{w_t \sim \text{N}(0, q)}$$`
+`\(\Large x_t = \alpha + \beta t\)`
 
-### .blue.center[ then our model of populations dynamics]
+&lt;br&gt;
 
-`$$\huge{x_t = x_{t-1} + u + w_t}$$`
+## .purple[Observation model]
 
-### .center[.blue[is a] *biased random walk*]
+`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+
+---
+
+# Linear regression fitted values
+
+&lt;img src="intro_to_SSMs_files/figure-html/linear_regr-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+&lt;!-- All of the variance in `\(y_t\)` is due to observation error --&gt;
+
+
+---
+
+# Observation errors
+
+&lt;img src="intro_to_SSMs_files/figure-html/unnamed-chunk-1-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+&lt;!-- Errors `\(v_t = y_t - x_t\)` --&gt;
+
+
+---
+
+# Model options | Biased random walk
+
+## .blue[State model]
+
+`\(\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+
+&lt;br&gt;
+
+## .purple[Observation model]
+
+`\(\Large y_t = x_t\)`
 
 
 ---
 
 # Examples of biased random walks
 
-&lt;img src="intro_to_SSMs_files/figure-html/ex_biased_rw-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="intro_to_SSMs_files/figure-html/ex_biased_rw-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-class: inverse, center, middle
+# Biased random walk
 
-# Observation (data) model
-
-
----
-
-# Observation model
-
-### .blue[ In log-space ]
-
-`$$\huge{\underbrace{y_t}_{\substack{\text{observed} \\ \text{counts}}} = \underbrace{x_t}_{\substack{\text{true} \\ \text{counts}}} + \underbrace{v_t}_{\substack{\text{observer} \\ \text{error}}} ~~ \text{with} ~~ v_t \sim \text{N}(0, r)}$$`
+&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_0-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Biased random walks with obs error
+# Biased random walk fit to earlier data
 
-&lt;img src="intro_to_SSMs_files/figure-html/ex_biased_rw_y-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="intro_to_SSMs_files/figure-html/biased_rw_fit-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
-
----
-
-class: inverse, center, middle
-
-# Multiple time series of abundance
+&lt;!-- All of the variance in `\(y_t\)` is due to process error --&gt;
 
 
 ---
 
-class: center
+# Process errors
+
+&lt;img src="intro_to_SSMs_files/figure-html/biased_rw_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+&lt;!-- Errors: `\(w_t = y_t - y_{t-1}\)` --&gt;
+
+
+---
+
+# Model options | Biased random walk + obs error
+
+## .blue[State model]
+
+`\(\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
 
 &lt;br&gt;
 
-# The survey data are hierarchical
+## .purple[Observation model]
 
-## .blue[ 4 states ]
-
-## .purple[ 6 recovery units ]
-
-## .orange[ 62 core areas ]
-
-## .green[ 242 populations ]
+`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
 
 
 ---
 
-# State model for multiple core areas
+# Biased random walk
 
-## .center.blue[ Each _core area_ gets its own model ]
-
-`$$\huge{\begin{gathered}
-    x_{1,t} = x_{1,t-1} + u_1 + w_{1,t} \\
-    x_{2,t} = x_{2,t-1} + u_2 + w_{2,t} \\
-    x_{3,t} = x_{3,t-1} + u_3 + w_{3,t} \\
-    \vdots \\
-    x_{62,t} = x_{62,t-1} + u_{62} + w_{62,t} \\
-  \end{gathered}}$$`
+&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Observation model for multiple time series
+# Biased random walk
 
-&gt; ## .blue[ Core areas comprise 1-22 populations ]
-
-&gt; ## .blue[ Each population is considered an observation from its respective core area ]
+&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_2-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Observation model for multiple time series
+# Biased random walk with obs error
 
-## .center.blue[ Example of 5 popns across 2 core areas (A &amp; B) ]
-
-`$$\huge{\begin{gathered}
-    y_{1,t} = x_{A,t} + v_{1,t} \\
-    y_{2,t} = x_{A,t} + v_{2,t} \\
-    \hline 
-    y_{3,t} = x_{B,t} + v_{3,t} \\
-    y_{4,t} = x_{B,t} + v_{4,t} \\
-    y_{5,t} = x_{B,t} + v_{5,t}
-  \end{gathered}}$$`
-
----
-
-# Example: 3 observations of a common state
-
-&lt;img src="intro_to_SSMs_files/figure-html/multi_obs-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-class: frimg
-background-image: url(figs/bulltrout_sampling.png)
-background-position: 50% 70%
-background-size: 80%
+# Variance in `\(y_t\)` is due to both process &amp; obs error
 
-# Varying sampling methods
+&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_errors_2-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-class: center, middle, inverse
+class: middle
 
-# Multiple surveys of each type&lt;br&gt;help inform the variance estimates 
+&gt; # .blue[How is it possible to separate out both the process and observation errors?]
 
-
----
-
-# Observation model for multiple time series
-
-## .center.blue[ Example of 5 popns from 2 core areas (_A_, _B_) ]
-
-`$$\huge{\begin{gathered}
-    y_{1,t} = x_{A,t} + v_{1,t} \\
-    y_{2,t} = x_{A,t} + v_{2,t} \\
-    \hline 
-    y_{3,t} = x_{B,t} + v_{3,t} \\
-    y_{4,t} = x_{B,t} + v_{4,t} \\
-    y_{5,t} = x_{B,t} + v_{5,t}
-  \end{gathered}}$$`
+&gt; # .green[They have different temporal patterns]
 
 
 ---
 
-# Observation errors for multiple time series
+&lt;img src="intro_to_SSMs_files/figure-html/ex_proc_obs_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
-## .center.blue[ Example of 5 popns from 2 core areas via 2 methods (_j_, _k_)]
-
-`$$\huge{\begin{gathered}
-    y_{1,t} = x_{A,t} + v_{1,t} \\
-    y_{2,t} = x_{A,t} + v_{2,t} \\
-    \hline 
-    y_{3,t} = x_{B,t} + v_{3,t} \\
-    y_{4,t} = x_{B,t} + v_{4,t} \\
-    y_{5,t} = x_{B,t} + v_{5,t}
-  \end{gathered}}
-  ~~~~~~~~~~~
-  \huge{\begin{gathered}
-    v_{1,t} \sim \text{N}(0, r_j) \\
-    v_{2,t} \sim \text{N}(0, r_k) \\
-    \hline 
-    v_{3,t} \sim \text{N}(0, r_k) \\
-    v_{4,t} \sim \text{N}(0, r_k) \\
-    v_{5,t} \sim \text{N}(0, r_j)
-  \end{gathered}}$$`
-
-
----
-
-# Fitting the models
-
-&gt; ## .blue[ Used the 30-year time period from 1991-2020 ]
-
-&gt; ## .blue[ Time series needed &amp;ge;10 years of non-missing data ]
-
-
----
-
-# Fitting the models
-
-&gt; ## .blue[ Used the 30-year time period from 1991-2020 ]
-
-&gt; ## .blue[ Time series needed &amp;ge;10 years of non-missing data ]
-
-&gt; ## .green[ All models fit in **R** using the `{MARSS}` package ]
-
-&gt; ## .green[ Estimated 90% confidence intervals on bias terms ]
-
-
----
-
-# Bias in trends
-
-&gt; ## .blue[ 37/62 core areas had a negative trend ]
-
-## .center.blue[ but only 3/62 were "significantly" negative ]
-
-
----
-
-class: frimg, center
-background-image: url(figs/kootenai.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a significant decline
-
-
----
-
-class: frimg, center
-background-image: url(figs/stillaguamish.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a significant decline
-
-
----
-
-# Bias in trends
-
-&gt; ## .blue[ 37/62 core areas had a negative trend ]
-
-## .center.blue[ but only 3/62 were "significantly" negative ]
-
-&lt;br&gt;
-
-&gt; ## .green[ 25/62 core areas had a positive trend ]
-
-## .center.green[ but only 5/62 were "significantly" positive ]
-
-
----
-
-class: frimg, center
-background-image: url(figs/lower_deschutes.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a significant increase
-
-
----
-
-class: frimg, center
-background-image: url(figs/upper_whitefish.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a significant increase
-
-
----
-
-class: frimg, center
-background-image: url(figs/skokomish.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of no systematic trend
-
-
----
-
-class: inverse, center, middle
-
-# Data quality influences our ability&lt;br&gt;to estimate biases
-
----
-
-class: frimg, center
-background-image: url(figs/big_salmon.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a data-poor core area
-
-
----
-
-class: frimg, center
-background-image: url(figs/flathead.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a data-rich core area
-
-
----
-
-# Big picture
-
-&gt; ## .blue[
-Status of bull trout in the Pacific Northwest is mixed 
-]
-
-
----
-
-# Big picture
-
-&gt; ## .blue[
-Status of bull trout in the Pacific Northwest is mixed 
-]
-
-&gt; ## .blue[
-Data quality affects our ability to assess trends
-]
-
-
----
-
-# Big picture
-
-&gt; ## .blue[
-Status of bull trout in the Pacific Northwest is mixed 
-]
-
-&gt; ## .blue[
-Data quality affects our ability to assess trends
-]
-
-&gt; ## .blue[
-State-space models can help 
-]
 
 
     </textarea>

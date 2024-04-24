@@ -117,13 +117,13 @@ plot(seq(nn), tt, type = "o",
 <br>
 
 ## .center.green[
-non-exhaustive surveys
+Non-exhaustive surveys
 ]
 ## .center.blue[
-undetected individuals
+Undetected individuals
 ]
 ## .center.orange[
-misidentified individuals
+Misidentified individuals
 ]
 
 
@@ -135,13 +135,13 @@ misidentified individuals
 
 
 ## .center.green[
-direct vs remotely sensed
+Direct vs remotely sensed
 ]
 ## .center.blue[
-design-based vs opportunistic
+Design-based vs opportunistic
 ]
 ## .center.orange[
-scientific surveys vs recreational sampling
+Scientific surveys vs recreational sampling
 ]
 
 
@@ -198,9 +198,6 @@ text("Time", x=cc/2, y=-ss/2+ss*2, xpd=NA, pos=1, cex=2)
 
 # States of nature might be
 
-<br>
-
-
 ## .center.green[
 Animal location
 ]
@@ -217,6 +214,26 @@ Reproductive status
 
 ---
 
+# Changes in the state of nature
+
+## .blue[Generally driven by a combination of]
+
+ ## .blue[&#x2022; intrinsic (eg, fecundity)]
+
+ ## .blue[&#x2022; extrinsic factors (eg, temperature)]
+
+
+---
+
+# Process errors
+
+## .blue[Some of the extrinsic drivers may be unknown]
+
+## .blue[We often call these unknown extrinsic factors] _process errors_
+
+
+---
+
 class: frimg, center, bottom, inverse-black
 background-image: url(figs/venice_carnival.jpg)
 background-size: 100%
@@ -224,6 +241,24 @@ background-size: 100%
 ## .white[Revealing the true state requires observations]
 
 <br>
+
+
+---
+
+# Observation (sampling) errors
+
+## .blue[Collecting data depends on many factors]
+
+### &#x2022; Environmental conditions (eg, cloud cover)
+
+### &#x2022; Behavior (eg, threat avoidance)
+
+### &#x2022; Demographics (age, sex, maturity)
+
+### &#x2022; Sampling design/coverage
+
+### &#x2022; Observer skill
+
 
 ---
 
@@ -257,13 +292,13 @@ background-size: cover
 
 # Part 2: Observation model
 
-## .purple[Data] = .blue[Truth] &#177; .red[Errors]
+<br>
+
+# .center[.purple[Data] = .blue[Truth] &#177; .red[Errors]]
 
 ---
 
 # Part 2: Observation model
-
-## .purple[Data] = .blue[Truth] &#177; .red[Errors]
 
 ```{r obs_diag, dpi=300, out.height="80%", out.width="80%", fig.align='center', echo=FALSE, warning=FALSE}
 par(mai=c(1,1,0,0), omi=rep(0,4))
@@ -391,151 +426,181 @@ background-size: 30%
 
 ---
 
-class: inverse, center, middle
+# State-space model | General form
 
-# Bull trout in the Pacific Northwest
+## .blue[State model (autoregressive)]
 
+$\Large x_t = f(x_{t-1}, \text{process error})$
 
----
+<br>
 
-# Collaborators
+## .purple[Observation model]
 
-.pull-left[
-
-### .green[ Brett Bowersox (IDFG) ]
-
-### .green[ Dan Brewer (USFWS) ]
-
-### .blue[ Erin Britton-Kuttel (USFWS) ]
-
-### .blue[ Sean Finn (USFWS) ]
-
-### .green[ Stephanie Gunckel (ODFW) ]
-
-]
-
-.pull-right[
-
-### .blue[ Craig Hansen (USFWS) ]
-
-### .blue[ Rebecca Migala (USFWS) ]
-
-### .blue[ Dan Nolfi (USFWS) ]
-
-### .green[ Marie Winkowski (WDFW) ]
-
-### .blue[ Alan Yanahan (USFWS) ]
-
-]
+$\Large y_t = g(x_t, \text{observation error})$
 
 
 ---
 
-class: frimg
-background-image: url(figs/bull_trout_art.png)
-background-position: 50% 90%
-background-size: 40%
+# State-space model | Random walk
 
-# Bull trout *Salvelinus confluentus*
+## .blue[State model]
 
-> ### .green[
-Native to the Pacific Northwest & Canada
-]
+$\Large x_t = x_{t-1} + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
 
-> ### .green[4 different life histories (resident, riverine, lacustrine, anadromous)
-]
+<br>
 
-> ### .green[ Mature at 4-7 years of age
-]
+## .purple[Observation model]
 
-> ### .green[ Listed as threatened under the ESA in 1999
-]
+$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
 
 
 ---
 
-class: frimg, inverse-black
-background-image: url(figs/bull_trout_range_map.jpg)
-background-position: 50% 50%
-background-size: 75%
+# State-space model | Biased random walk
+
+## .blue[State model]
+
+$\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
 
 
 ---
 
-class: inverse, center, middle
+# State-space model | Mean-reverting
 
-# Model for the state of nature
+## .blue[State model]
 
+$\Large x_t = b x_{t-1} + w_t ~~~~~~~~~~ |b| < 1 ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
 
----
+<br>
 
-# Simple model of population dynamics
+## .purple[Observation model]
 
-### .blue.center[Exponential growth/decline in continuous time]
-
-$$\huge{N(t) = N_0 ~ \underbrace{\exp(u)}_{\substack{\text{rate of} \\ \text{change}}} \underbrace{\exp(w t)}_{\substack{\text{stochastic} \\ \text{environment}}}}$$
-
-
----
-
-# Simple model of population dynamics
-
-### .blue.center[In discrete time, with a time step of 1 year]
-
-$$\huge{N_t = N_{t-1} \exp(u + w_t)}$$
+$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
 
 
 ---
 
-# Simple model of population dynamics
+# Consider these data
 
-### .blue.center[In discrete time, with a time step of 1 year]
+```{r ex_bias_rw, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+TT <- 30
 
-$$\huge{N_t = N_{t-1} \exp(u + w_t)}$$
+uu <- -0.2
+  
+ww <- xx <- rnorm(TT)
+for(t in 2:TT) {
+  xx[t] <- xx[t-1] + uu + ww[t]
+}
 
-### .blue.center[such that on a log scale]
+ee <- rnorm(TT)
+yy <- xx + ee
 
-$$\huge{\log (N_t) = \log (N_{t-1}) + u + w_t}$$
-
-### .blue.center[which we can rewrite as]
-
-$$\huge{x_t = x_{t-1} + u + w_t}$$
-
-
----
-
-# Biased random walk
-
-### .blue.center[If we assume that the errors are white noise]
-
-$$\huge{w_t \sim \text{N}(0, q)}$$
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+plot.ts(yy, ylim = range(xx,yy),
+        lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(y[t])))
+```
 
 
 ---
 
-# Biased random walk
+# Two model options
 
-### .blue.center[If we assume that the errors are white noise]
+## .blue[1) Linear regression] 
 
-$$\huge{w_t \sim \text{N}(0, q)}$$
+$\Large y_t = \alpha + \beta t + e_t$
 
-### .blue.center[ then our model of populations dynamics]
+<br>
 
-$$\huge{x_t = x_{t-1} + u + w_t}$$
+## .green[2) Biased random walk]
 
-### .center[.blue[is a] *biased random walk*]
+$\Large x_t = x_{t-1} + u + e_t$
+
+
+---
+
+# Model options | Linear regression
+
+## .blue[State model]
+
+$\Large x_t = \alpha + \beta t$
+
+<br>
+
+## .purple[Observation model]
+
+$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+---
+
+# Linear regression fitted values
+
+```{r linear_regr, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+theta <- coef(lm(yy ~ seq(TT)))
+y_obs <- theta[1] + theta[2] * seq(TT)
+
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),
+        cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+lines(y_obs, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+```
+
+<!-- All of the variance in $y_t$ is due to observation error -->
+
+
+---
+
+# Observation errors
+
+```{r, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+theta <- coef(lm(yy ~ seq(TT)))
+y_obs <- theta[1] + theta[2] * seq(TT)
+
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),  
+        cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+lines(y_obs, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+segments(seq(TT), y0 = y_obs, y1 = yy, col = "red")
+```
+
+<!-- Errors $v_t = y_t - x_t$ -->
+
+
+---
+
+# Model options | Biased random walk
+
+## .blue[State model]
+
+$\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\Large y_t = x_t$
 
 
 ---
 
 # Examples of biased random walks
 
-```{r ex_biased_rw, fig.dim = c(8,4.5), fig.align = 'center', out.height="80%", out.width="80%"}
+```{r ex_biased_rw, fig.dim = c(8,4), dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
 x1 <- cumsum(rnorm(30, 0.1, 0.3)) + 10
 
 x2 <- cumsum(rnorm(30, -0.1, 0.3)) + 10
 
-clr1 <- c("#c6dbef",
+clr1 <- c("#f7fbff",
+          "#deebf7",
+          "#c6dbef",
           "#9ecae1",
           "#6baed6",
           "#4292c6",
@@ -543,7 +608,9 @@ clr1 <- c("#c6dbef",
           "#08519c",
           "#08306b")
 
-clr2 <- c("#fcbba1",
+clr2 <- c("#fff5f0",
+          "#fee0d2",
+          "#fcbba1",
           "#fc9272",
           "#fb6a4a",
           "#ef3b2c",
@@ -551,30 +618,19 @@ clr2 <- c("#fcbba1",
           "#a50f15",
           "#67000d")
 
-par(mfrow = c(1,2), mai = c(1, 1, 0.7, 0.3))
-
-plot(x1, type = "l",
-     las = 1, col = "dodgerblue", lwd = 2,
-     ylim = c(8, 16),
-     ylab = expression(italic(x[t])),
-     xlab = "Time",
-     main = "",
-     cex.lab = 1.5, cex.axis = 1.3)
-mtext("Positive bias", side = 3, line = 0.8, cex = 1.8)
-for(i in 1:6) {
+par(mfrow = c(1,2), mai = c(1, 1, 0.5, 0))
+plot.ts(x1, las = 1, col = "dodgerblue", lwd = 2, ylim = c(8, 16),
+        ylab = expression(italic(x[t])), main = "")
+mtext("Positive bias", side = 3, line = 1, cex = 1.5)
+for(i in 9:3) {
   lines(cumsum(rnorm(30, 0.1, 0.3)) + 10,
         col = clr1[i], lwd = 2)
 }
 
-plot(x2, type = "l",
-     las = 1, col = "indianred", lwd = 2,
-     ylim = c(4, 12),
-     ylab = expression(italic(x[t])),
-     xlab = "Time",
-     main = "",
-     cex.lab = 1.5, cex.axis = 1.3)
-mtext("Negative bias", side = 3, line = 0.8, cex = 1.8)
-for(i in 1:6) {
+plot.ts(x2, las = 1, col = "indianred", lwd = 2,  ylim = c(4, 12),
+        ylab = expression(italic(x[t])), main = "")
+mtext("Negative bias", side = 3, line = 1, cex = 1.5)
+for(i in 9:3) {
   lines(cumsum(rnorm(30, -0.1, 0.3)) + 10,
         col = clr2[i], lwd = 2)
 }
@@ -583,358 +639,165 @@ for(i in 1:6) {
 
 ---
 
-class: inverse, center, middle
+# Biased random walk
 
-# Observation (data) model
-
-
----
-
-# Observation model
-
-### .blue[ In log-space ]
-
-$$\huge{\underbrace{y_t}_{\substack{\text{observed} \\ \text{counts}}} = \underbrace{x_t}_{\substack{\text{true} \\ \text{counts}}} + \underbrace{v_t}_{\substack{\text{observer} \\ \text{error}}} ~~ \text{with} ~~ v_t \sim \text{N}(0, r)}$$
-
-
----
-
-# Biased random walks with obs error
-
-```{r ex_biased_rw_y, fig.dim = c(8,4.5), fig.align = 'center', out.height="80%", out.width="80%"}
-y1 <- x1 + rnorm(30, 0, 0.4)
-
-y2 <- x2 + rnorm(30, 0, 0.4)
-
-par(mfrow = c(1,2), mai = c(1, 1, 0.7, 0.3))
-
-plot(x1, type = "l",
-     las = 1, col = "gray", lwd = 2,
-     ylim = range(x1, y1),
-     ylab = expression(italic(x[t])),
-     xlab = "Time",
-     main = "",
-     cex.lab = 1.5, cex.axis = 1.3)
-mtext("Positive bias", side = 3, line = 0.8, cex = 1.8)
-lines(y1, col = "dodgerblue", lwd = 3)
-
-plot(x2, type = "l",
-     las = 1, col = "gray", lwd = 2,
-     ylim = range(x2, y2),
-     ylab = expression(italic(x[t])),
-     xlab = "Time",
-     main = "",
-     cex.lab = 1.5, cex.axis = 1.3)
-mtext("Negative bias", side = 3, line = 0.8, cex = 1.8)
-lines(y2, col = "indianred", lwd = 3)
+```{r brw_states_obs_0, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+xw <- rbind(cbind(seq(TT), xx), cbind(seq(TT)+0.5, xx+uu))
+xw <- xw[order(xw[,1]),]
+xw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
+  
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, ylim = range(xx,yy), type = "n",
+        las = 1, ylab = expression(italic(x[t])))
+lines(xw[,1], xw[,2], lwd = 2, col = "gray")
+lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
 ```
 
 
 ---
 
-class: inverse, center, middle
+# Biased random walk fit to earlier data
 
-# Multiple time series of abundance
+```{r biased_rw_fit, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(y[t])))
+lines(yy, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+```
+
+<!-- All of the variance in $y_t$ is due to process error -->
 
 
 ---
 
-class: center
+# Process errors
+
+```{r biased_rw_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(y[t])))
+lines(yy, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+segments(seq(2,TT), y0 = yy[-TT], y1 = yy[-1], col = "red")
+```
+
+<!-- Errors: $w_t = y_t - y_{t-1}$ -->
+
+
+---
+
+# Model options | Biased random walk + obs error
+
+## .blue[State model]
+
+$\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
 
 <br>
 
-# The survey data are hierarchical
+## .purple[Observation model]
 
-## .blue[ 4 states ]
-
-## .purple[ 6 recovery units ]
-
-## .orange[ 62 core areas ]
-
-## .green[ 242 populations ]
+$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
 
 
 ---
 
-# State model for multiple core areas
+# Biased random walk
 
-## .center.blue[ Each _core area_ gets its own model ]
-
-$$\huge{\begin{gathered}
-    x_{1,t} = x_{1,t-1} + u_1 + w_{1,t} \\
-    x_{2,t} = x_{2,t-1} + u_2 + w_{2,t} \\
-    x_{3,t} = x_{3,t-1} + u_3 + w_{3,t} \\
-    \vdots \\
-    x_{62,t} = x_{62,t-1} + u_{62} + w_{62,t} \\
-  \end{gathered}}$$
-
-
----
-
-# Observation model for multiple time series
-
-> ## .blue[ Core areas comprise 1-22 populations ]
-
-> ## .blue[ Each population is considered an observation from its respective core area ]
-
-
----
-
-# Observation model for multiple time series
-
-## .center.blue[ Example of 5 popns across 2 core areas (A & B) ]
-
-$$\huge{\begin{gathered}
-    y_{1,t} = x_{A,t} + v_{1,t} \\
-    y_{2,t} = x_{A,t} + v_{2,t} \\
-    \hline 
-    y_{3,t} = x_{B,t} + v_{3,t} \\
-    y_{4,t} = x_{B,t} + v_{4,t} \\
-    y_{5,t} = x_{B,t} + v_{5,t}
-  \end{gathered}}$$
-
----
-
-# Example: 3 observations of a common state
-
-```{r multi_obs, fig.dim = c(8, 4.5), fig.align = 'center', out.height="80%", out.width="80%"}
-y2 <- x1 + rnorm(30, 0, 0.4)
-y3 <- x1 + rnorm(30, 0, 0.5)
-
-## set colormap
-clr <- viridisLite::mako(3, begin = 0.4, end = 0.9)
-
-par(mai = c(1, 1, 0.1, 0.1))
-
-plot(x1, type = "l",
-     las = 1, col = "gray", lwd = 3,
-     ylim = range(x1, y1, y2, y3),
-     ylab = expression(paste(italic(x[t]), "  or  ", italic(y[t]))),
-     xlab = "Time",
-     main = "",
-     cex.lab = 1.6, cex.axis = 1.3)
-lines(y1, col = clr[3], lwd = 3)
-lines(y2, col = clr[2], lwd = 3)
-lines(y3, col = clr[1], lwd = 3)
+```{r brw_states_obs, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+xw <- rbind(cbind(seq(TT), xx), cbind(seq(TT)+0.5, xx+uu))
+xw <- xw[order(xw[,1]),]
+xw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
+  
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, ylim = range(xx,yy), type = "n",
+        las = 1, ylab = expression(italic(x[t])))
+lines(xw[,1], xw[,2], lwd = 2, col = "gray")
+lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
 ```
 
 
 ---
 
-class: frimg
-background-image: url(figs/bulltrout_sampling.png)
-background-position: 50% 70%
-background-size: 80%
+# Biased random walk
 
-# Varying sampling methods
-
-
----
-
-class: center, middle, inverse
-
-# Multiple surveys of each type<br>help inform the variance estimates 
+```{r brw_states_obs_2, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, ylim = range(xx,yy), type = "n",
+        las = 1, ylab = expression(italic(x[t])))
+## lines(xw[,1], xw[,2], type = "o", pch = 16, lwd = 2, col = "gray")
+lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+```
 
 
 ---
 
-# Observation model for multiple time series
+# Biased random walk with obs error
 
-## .center.blue[ Example of 5 popns from 2 core areas (_A_, _B_) ]
-
-$$\huge{\begin{gathered}
-    y_{1,t} = x_{A,t} + v_{1,t} \\
-    y_{2,t} = x_{A,t} + v_{2,t} \\
-    \hline 
-    y_{3,t} = x_{B,t} + v_{3,t} \\
-    y_{4,t} = x_{B,t} + v_{4,t} \\
-    y_{5,t} = x_{B,t} + v_{5,t}
-  \end{gathered}}$$
+```{r brw_states_obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+plot.ts(yy, type = "n",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870")
+segments(seq(TT), y0 = xx, y1 = yy, col = "red")
+```
 
 
 ---
 
-# Observation errors for multiple time series
+# Variance in $y_t$ is due to both process & obs error
 
-## .center.blue[ Example of 5 popns from 2 core areas via 2 methods (_j_, _k_)]
-
-$$\huge{\begin{gathered}
-    y_{1,t} = x_{A,t} + v_{1,t} \\
-    y_{2,t} = x_{A,t} + v_{2,t} \\
-    \hline 
-    y_{3,t} = x_{B,t} + v_{3,t} \\
-    y_{4,t} = x_{B,t} + v_{4,t} \\
-    y_{5,t} = x_{B,t} + v_{5,t}
-  \end{gathered}}
-  ~~~~~~~~~~~
-  \huge{\begin{gathered}
-    v_{1,t} \sim \text{N}(0, r_j) \\
-    v_{2,t} \sim \text{N}(0, r_k) \\
-    \hline 
-    v_{3,t} \sim \text{N}(0, r_k) \\
-    v_{4,t} \sim \text{N}(0, r_k) \\
-    v_{5,t} \sim \text{N}(0, r_j)
-  \end{gathered}}$$
+```{r brw_states_obs_errors_2, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, ylim = range(xx,yy), type = "n",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+lines(xw[,1], xw[,2], lwd = 2, col = "gray")
+lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+segments(seq(TT), y0 = xx, y1 = yy, col = "red")
+lines(yy, lwd = 2, type = "o", pch = 16, col = "#844870", cex = 1.5)
+```
 
 
 ---
 
-# Fitting the models
+class: middle
 
-> ## .blue[ Used the 30-year time period from 1991-2020 ]
+> # .blue[How is it possible to separate out both the process and observation errors?]
 
-> ## .blue[ Time series needed &ge;10 years of non-missing data ]
-
-
----
-
-# Fitting the models
-
-> ## .blue[ Used the 30-year time period from 1991-2020 ]
-
-> ## .blue[ Time series needed &ge;10 years of non-missing data ]
-
-> ## .green[ All models fit in **R** using the `{MARSS}` package ]
-
-> ## .green[ Estimated 90% confidence intervals on bias terms ]
+> # .green[They have different temporal patterns]
 
 
 ---
 
-# Bias in trends
+```{r ex_proc_obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE, fig.dim = c(8,5)}
+xp <- matrix(NA, TT, 3)
+xp[1,] <- c(0,0,0)
 
-> ## .blue[ 37/62 core areas had a negative trend ]
+for(t in 2:TT) {
+  xp[t,] <- xp[t-1,] + uu + rnorm(3)
+}
 
-## .center.blue[ but only 3/62 were "significantly" negative ]
+yp <- xp[,1] + matrix(rnorm(TT*3), TT, 3)
 
+par(mfcol = c(2,3), mai = c(0.6,0.6,0.1,0), omi = c(0,0,0.2,0))
+for(i in 1:3) {
+  plot.ts(xp[,i], xlab = "", ylab = expression(italic(x[t])),
+          lwd = 2, col = "#488fdf")
+  if(i == 2) {
+    mtext(side = 3, " Different realizations of same process",
+          line = 0.5, xpd = NA, cex = 1.5)
+    }
+  plot.ts(yp[,i], ylab = expression(italic(y[t])),
+          lwd = 2, col = "#844870")
+  if(i == 2) {
+    mtext(side = 3, " Different observations of same process",
+          line = 0.5, xpd = NA, cex = 1.5)
+    }
+}
+```
 
----
-
-class: frimg, center
-background-image: url(figs/kootenai.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a significant decline
-
-
----
-
-class: frimg, center
-background-image: url(figs/stillaguamish.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a significant decline
-
-
----
-
-# Bias in trends
-
-> ## .blue[ 37/62 core areas had a negative trend ]
-
-## .center.blue[ but only 3/62 were "significantly" negative ]
-
-<br>
-
-> ## .green[ 25/62 core areas had a positive trend ]
-
-## .center.green[ but only 5/62 were "significantly" positive ]
-
-
----
-
-class: frimg, center
-background-image: url(figs/lower_deschutes.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a significant increase
-
-
----
-
-class: frimg, center
-background-image: url(figs/upper_whitefish.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a significant increase
-
-
----
-
-class: frimg, center
-background-image: url(figs/skokomish.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of no systematic trend
-
-
----
-
-class: inverse, center, middle
-
-# Data quality influences our ability<br>to estimate biases
-
----
-
-class: frimg, center
-background-image: url(figs/big_salmon.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a data-poor core area
-
-
----
-
-class: frimg, center
-background-image: url(figs/flathead.png)
-background-position: 40% 75%
-background-size: 65%
-
-# Example of a data-rich core area
-
-
----
-
-# Big picture
-
-> ## .blue[
-Status of bull trout in the Pacific Northwest is mixed 
-]
-
-
----
-
-# Big picture
-
-> ## .blue[
-Status of bull trout in the Pacific Northwest is mixed 
-]
-
-> ## .blue[
-Data quality affects our ability to assess trends
-]
-
-
----
-
-# Big picture
-
-> ## .blue[
-Status of bull trout in the Pacific Northwest is mixed 
-]
-
-> ## .blue[
-Data quality affects our ability to assess trends
-]
-
-> ## .blue[
-State-space models can help 
-]
 
 
