@@ -26,7 +26,7 @@ set.seed(592)
 
 # Introduction
 
-Many problems in environmental science can be addressed with state-space models and we've already seen a few examples of how some simple population models can be written as state-space models.  This lab will introduce you to fitting univariate state-space models with the {MARSS} package. Notably, {MARSS} follows the same notation for defining state-space models as we would write on a whiteboard. Also, because {MARSS} was designed to fit mutlivariate state-space models, which we will see later, each of the model elements must be a `matrix` class. This also applies to scalar values such that they're not `numeric` or `integer`.
+Many problems in environmental science can be addressed with state-space models and we've already seen a few examples of some simple models. This lab will introduce you to fitting univariate state-space models with the {MARSS} package. Notably, {MARSS} follows the same notation for defining state-space models as we would write on a whiteboard. Also, because {MARSS} was designed to fit mutlivariate state-space models, each of the model elements must be a `matrix` class. This also applies to scalar values such that they're not `numeric` or `integer`.
 
 ***
 
@@ -59,7 +59,7 @@ w_t \sim \text{N}(0, q)
 $$
 
 <div class="boxy boxy-red boxy-exclamation">
-**Note:** As discussed in lecture, it's difficult to estimate both $u$ and $b$, so we'll assume $u$ = 0.
+**Note:** It's very difficult to estimate both $u$ and $b$, so we'll assume $u$ = 0.
 </div>
 
 ## Initial state
@@ -82,7 +82,7 @@ $$
 # Simulate some data
 
 <div class="boxy boxy-blue boxy-clipboard-list">
-**Task:** Use a `for()` loop to simulate from the AR(1) state model.
+**Task:** Use a `for()` loop to simulate from an AR(1) state model.
 </div>
 
 ```{r gompertz_sim, echo = TRUE, eval= TRUE}
@@ -434,5 +434,24 @@ plot(mod_fit)
 par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
 ## get summary & diagnostic plots
 plot(mod_fit)
+```
+
+# Forecasting
+
+```{r}
+## fit the model with first 30 data points
+mod_fit <- MARSS(y = YY, model = mod_list)
+
+fY <- predict(mod_fit, type="ytt1")
+
+fX <- predict(mod_fit, type="xtt1")
+
+fX$pred$estimate
+
+kf <- MARSSkfas(mod_fit)
+
+kf$xtt1
+
+
 ```
 
