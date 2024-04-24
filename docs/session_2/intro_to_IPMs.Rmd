@@ -1,9 +1,9 @@
 ---
 title: "Introduction to Integrated Populations Models"
-subtitle: "Salmon Forecasting Workshop"  
+subtitle: "Predicting Salmon Returns"  
 author: 
 #  - "Mark Scheuerell"
-  - "_WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024_"
+  - "WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024"
 output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css", "my-theme.css"]

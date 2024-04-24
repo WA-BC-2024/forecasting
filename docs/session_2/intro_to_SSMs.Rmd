@@ -1,11 +1,9 @@
 ---
-title: "Introduction to Integrated Populations Models"
-subtitle: "Mark Scheuerell"  
-# subtitle: "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"  
-author: "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"
+title: "Introduction to State-Space Models"
+subtitle: "Predicting Salmon Returns"  
+author: 
 #  - "Mark Scheuerell"
-#  - "WA-BC AFS Meeting<br>Spokane, WA<br>29 April 2024"
-# date: '`r Sys.Date()`'
+  - "WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024"
 output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css", "my-theme.css"]
@@ -60,8 +58,6 @@ style_duo(
 )
 ```
 
-
----
 
 # ESA status reviews
 
