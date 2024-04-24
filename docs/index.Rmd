@@ -1,6 +1,7 @@
 ---
-title: "Introduction to forecasting"
-subtitle: "WA-BC Chapter of AFS"
+title: "Predicting Salmon Returns"
+subtitle: "A survey of existing models and an exploration of new methods for building better predictions"
+author: "<br>WA-BC Chapter of AFS"
 output:
   html_document:
     fig_caption: yes
@@ -16,24 +17,18 @@ options(width = 100)
 
 ***
 
-## Background
-
-These are materials for the forecasting workshop presented at the 2024 Annual Meeting of the WA-BC Chapter of the American Fisheries Society in Spokane, WA.
-
-<br>
-
 ## Instructors
 
-**Dr. Matt Falcy**   
+[**Dr. Matt Falcy**](https://www.uidaho.edu/cnr/faculty/falcy)   
 Assistant Unit Leader | Idaho Cooperative Fish and Wildlife Research Unit  
 Assistant Professor | Department of Fish and Wildlife Sciences  
-University of Idaho
+University of Idaho  
 
-
-**Dr. Mark Scheuerell**   
+[**Dr. Mark Scheuerell**](https://fish.uw.edu/faculty/mark-scheuerell/)   
 Assistant Unit Leader | Washington Cooperative Fish and Wildlife Research Unit  
 Associate Professor | School of Aquatic and Fishery Sciences  
-University of Washington
+University of Washington  
+
 
 <br>
 
@@ -51,7 +46,7 @@ Spokane, WA
 
 Links are included after each topic.
 
-### Session 1 - Background & Fundamentals
+### Session 1 - Background & Traditional Approaches
 
 __8:00 - 9:40__ 
 
@@ -69,13 +64,13 @@ __9:40 - 10:00__
 
 ***
 
-### Session 2 - Evaluation & Assessment
+### Session 2 - Contemporary Approaches
 
 __10:00 - 12:00__
 
-  * topic 4 | [materials](session_2/lec_04.html)
+  * State-Space Models | [slide deck](session_2/intro_to_SSMs.html)
   
-  * topic 5 | [materials](session_2/lec_05.html)
+  * Integrated Population Models | [slide deck](session_2/intro_to_IPMs.html)
   
   * topic 6 | [materials](session_2/lec_06.html)
   
