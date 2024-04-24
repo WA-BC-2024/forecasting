@@ -1,0 +1,438 @@
+---
+title: "Fitting State-Space Models"
+subtitle: "Predicting Salmon Returns"  
+author: 
+#  - "Mark Scheuerell"
+  - "WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024"
+output:
+  html_document:
+    theme: cerulean
+    highlight: textmate
+    css: ["lecture_inst.css", "fontawesome.css", "solid.css"]
+    toc: true
+    toc_float: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+knitr::opts_chunk$set(
+  fig.dim = c(8, 5),
+  fig.align = "center"
+  )
+set.seed(592)
+```
+
+***
+
+# Introduction
+
+Many problems in environmental science can be addressed with state-space models and we've already seen a few examples of how some simple population models can be written as state-space models.  This lab will introduce you to fitting univariate state-space models with the {MARSS} package. Notably, {MARSS} follows the same notation for defining state-space models as we would write on a whiteboard. Also, because {MARSS} was designed to fit mutlivariate state-space models, which we will see later, each of the model elements must be a `matrix` class. This also applies to scalar values such that they're not `numeric` or `integer`.
+
+***
+
+# Gompertz model
+
+We'll begin by simulating a true state of nature and then corrupting it with some observation error to produce the "data". Specifically, we'll use a discrete-time Gompertz model of density-dependent growth. Recall that the size of a population at time $(N_t)$ is given by
+
+$$
+N_t = N_{t-1} ~ \exp(u ~ + ~ (b - 1) \log(N_{t-1}))\exp(w _t)
+$$
+
+Taking the log of both sides and substituting $x_t$ for $\log(N_t)$
+
+$$
+\begin{align}
+\log(N_t) & = \log(N_{t-1}) + u + (b - 1) \log(N_{t-1}) + w_t \\
+& \Downarrow \\
+x_t &= x_{t-1} + u + (b - 1) x_{t-1} + w_t \\
+    &= x_{t-1} + u + b x_{t-1} - x_{t-1} + w_t \\
+    &= u + b x_{t-1} + w_t
+\end{align}
+$$
+
+We generally assume the process errors are Gaussian, such that our full state model is our familiar AR(1) process
+
+$$
+x_t = u + b x_{t-1} + w_t \\
+~ \\
+w_t \sim \text{N}(0, q)
+$$
+
+<div class="boxy boxy-red boxy-exclamation">
+**Note:** As discussed in lecture, it's difficult to estimate both $u$ and $b$, so we'll assume $u$ = 0.
+</div>
+
+## Initial state
+
+So far we have largely ignored an important part of our model definition. Because our state model is an autoregressive process, we must define the initial state when $t$ = 0 $(x_0)$. In theory, $x_0$ is assumed to be a random effect with unknown mean and variance, such that
+
+$$
+x_0 \sim \text{N}(\pi,\lambda)
+$$
+
+In practice, however, estimating both $\pi$ and $\lambda$ is nearly impossible, so the default is to treat $x_0$ as a fixed (but unknown) effect, such that
+
+$$
+x_0 \sim \text{N}(\pi,0).
+$$
+
+
+***
+
+# Simulate some data
+
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Use a `for()` loop to simulate from the AR(1) state model.
+</div>
+
+```{r gompertz_sim, echo = TRUE, eval= TRUE}
+## number of time steps
+TT <- 40
+
+## strength of density-dependence (0 < b < 1)
+bb <- 0.5
+
+## time series of process errors with SD = 1
+ww <- rnorm(TT, 0, 1)
+
+## initialize state & set x0 = w0
+xx <- ww
+
+## loop over time steps
+for(t in 2:TT) {
+  xx[t] <- bb * xx[t-1] + ww[t]
+}
+```
+
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Add some observation error to the true state.
+</div>
+
+```{r gomp_obs_error, echo = TRUE, eval= TRUE}
+## obs errors with SD = 0.5
+vv <- rnorm(TT, 0, 0.5)
+
+## obs data
+yy <- xx + vv
+```
+
+
+***
+
+# Fitting models with {MARSS}
+
+The workhorse function in the {MARSS} package that allows us to fit state-state models is `MARSS()`, which has four important arguments (two are required):
+
+```{r, echo=TRUE, eval=FALSE}
+MARSS(y, model = NULL, inits = NULL, control = NULL, ...)
+```
+
+* `y` is an $n \times T$ `matrix` of data (observations)
+
+* `model` is a `list` that defines the state-space model in terms of parameters to be estimated
+
+* `inits` [_optional_] is a `list` of initial values for parameters to be estimated
+
+* `control` [_optional_] is a `list` of options for controlling fitting algorithms, setting tolerance & convergence parameters, etc
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** Type `?MARSS` at the command prompt to view the help file. You can also see the detailed user guide [here](https://cran.r-project.org/web/packages/MARSS/vignettes/UserGuide.pdf).
+</div>
+
+## Defining the model for `MARSS()`
+
+`MARSS()` uses an expanded form of state-space model, such that our Gompertz model
+
+$$
+\begin{align}
+x_t &= b x_{t-1} + w_t \\
+y_t &= x_t + v_t
+\end{align}
+$$
+instead becomes
+
+$$
+\begin{align}
+x_t &= b x_{t-1} + u + w_t \\
+y_t &= Z x_t + a + v_t
+\end{align}
+$$
+
+with $u = 0$, $Z = 1$, and $a = 0$.
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** `MARSS()` works with the `matrix` class in R, so we have to define any scalar as a $1 \times 1$ matrix.
+</div>
+
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Define the model list with matrices for the known and estimated model parameters, including the variance(s) of the process and/or observation errors. You can skip the definition of the initial state `x0` because `MARSS()` will do this for us.
+</div>
+
+```{r, echo=TRUE}
+mod_list <- list(
+  ## state model
+  B = matrix("b"), # AR(1) parameter 
+  U = matrix(0),   # bias or intrinsic growth
+  Q = matrix("q"), # variance of the process errors
+  ## obs model
+  Z = matrix(1),   # maps the states onto the observation
+  A = matrix(0),   # sampling bias/offset
+  R = matrix("r")  # variance of the obs errors
+  )
+```
+
+<div class="boxy boxy-red boxy-exclamation">
+**Note:** `MARSS()` uses uppercase letters in its model definition. You will get an error if you try lowercase letters.
+</div>
+
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Define the data as a $1$ (rows) $\times$ $T$ (cols) matrix.
+</div>
+
+```{r define_data}
+## define the data as an N (rows) x T (cols) matrix
+YY <- matrix(yy, nrow = 1, ncol = TT)
+```
+
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Ignore the `inits` and `control` arguments for now and fit the model.
+</div>
+
+```{r gompertz_fit, echo = TRUE, eval = TRUE}
+## load MARSS package
+library(MARSS)
+
+## fit the model
+mod_fit <- MARSS(y = YY, model = mod_list)
+```
+
+## Interpreting `MARSS()` output
+
+`MARSS()` returns a block of information when it's finished that contains some useful information, but also lacks some other stuff that we'll extract below. 
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** The first block of information tells us if all of the parameters converged within the default number of iterations (500) (`Success!`). It also suggests we try more conservative convergence limits, but this can largely be ignored.
+</div>
+
+```
+## Success! abstol and log-log tests passed at 40 iterations.
+## Alert: conv.test.slope.tol is 0.5.
+## Test with smaller values (<0.1) to ensure convergence.
+```
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** The second block tells us
+
+* the method used for fitting (`kem` here)
+
+* the convergence test parameters
+
+* number of iterations before convergence
+
+* the log-likelihood and associated information scores
+</div>
+
+```
+## MARSS fit is
+## Estimation method: kem 
+## Convergence test: conv.test.slope.tol = 0.5, abstol = 0.001
+## Estimation converged in 40 iterations. 
+## Log-likelihood: -57.95738 
+## AIC: 123.9148   AICc: 125.0576   
+```
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** The third block lists the point estimates of the model parameters corresponding to the model list (`mod_list` above), including the initial state `x0`. By default `MARSS()` appends the model list item (eg, `Q`) and the specific parameter as defined by the user (eg, `q`). When we fit multivariate models, there will be multiple entries for those list items containing multiple parameters (eg, `Q.var`, `Q.cov`).
+</div>
+
+```
+##       Estimate
+## R.r      0.287
+## B.b      0.683
+## Q.q      0.682
+## x0.x0    1.233
+## Initial states (x0) defined at t=0
+```
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** The last block tells you that standard errors of the estimated parameters have not been estimated and that you can use the `MARSSparamCIs()` function to estimate them.
+</div>
+
+```
+## Standard errors have not been calculated. 
+## Use MARSSparamCIs to compute CIs and bias estimates.
+```
+
+***
+
+# Extracting info from {MARSS}
+
+Although `MARSS()` returns some useful information after execution, the `MARSS` object also contains a lot of other important information that we can extract and act upon. Specifically, when assigned to an object, `MARSS()` returns a long `list` containing details about the model structure, control parameters, estimated parameters, hidden states and their standard errors.
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** Type `str(MARSS_object)` where `MARSS_object` is the object you assigned to the `MARSS()` call (ie, `mod_fit` above) to see a detailed outline of the list structure. 
+</div>
+
+
+## Estimated states
+
+Fitted values are stored in an $N \times T$ matrix (here $N = 1$) accessed with `$states`. The standard errors of the estimated states are stored in an $N \times T$ matrix accessed with `$states.se`. 
+
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Extract the estimated state and its standard error.
+</div>
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** It's often easier to transpose the state(s) after extracting them for use in plotting or other comparisons.
+</div>
+
+```{r, echo = TRUE, eval = TRUE}
+## T x 1 (transposed) vector of states
+mod_fits <- mod_fit$states |> t()
+
+## T x 1 (transposed) vector of SE's
+mod_fits_SE <- mod_fit$states.se |> t()
+```
+
+
+## Model parameters
+
+We can extract the parameters directly from a fitted MARSS model object rather than having to transcribe or copy/paste them from the output.
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** We can use the `coef()` function to extract $b$ from the `MARSS()` fitted object.
+</div>
+
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Use `coef()` to extract $b$.
+</div>
+
+```{r model-coef}
+## get the estimated parameters
+params_est <- coef(mod_fit, type = "vector")
+
+## get `b` (strength of density dependence)
+params_est["B.b"] |> round(2)
+```
+
+
+***
+
+# Approximate confidence intervals
+
+We can estimate a [(1 - $\alpha$)  $\times$ 100]% confidence interval around the estimated states as
+
+$$
+\hat{x} ~ \pm ~ t_{1 - \alpha/2} \times \text{SE}(\hat{x})
+$$
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** You can get values from the t-distribution with the function `qt()`. Type `?qt` for more information.
+</div>
+
+
+```{r brw_CI, eval = TRUE, echo = TRUE}
+## upper 95% CI
+mod_fits_CI_hi <- mod_fits + qt(p = 0.975, df = TT - 1) * mod_fits_SE
+
+## lower 95% CI
+mod_fits_CI_lo <- mod_fits - qt(p = 0.975, df = TT - 1) * mod_fits_SE
+```
+
+***
+
+# Plotting the states & SE
+
+It's common to plot the estimated state and some uncertainty about it (i.e., standard error, confidence interval), along with the data. Here are some examples using the base functions `plot()` and `lines()`. Similar plots could easily be made with `ggplot()` as well.
+
+## Model fit and true states 
+
+```{r rw_plot_fits_states, align.fig="center"}
+par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
+plot.ts(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf",
+        las = 1, ylim = c(min(xx,yy), max(xx,yy)),
+        ylab = expression(italic(x[t])~~or~~italic(y[t])))
+# lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870")
+lines(mod_fits, lwd = 2, type = "l", cex = 1.5, col = "black")
+lines(mod_fits_CI_hi, lwd = 2, type = "l", cex = 1.5, col = "gray")
+lines(mod_fits_CI_lo, lwd = 2, type = "l", cex = 1.5, col = "gray")
+```
+
+
+## Model fit with observations only
+
+```{r rw_plot_fit_nostate, align.fig="center"}
+par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
+plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
+        las = 1, ylim = c(min(xx,yy), max(xx,yy)),
+        ylab = expression(italic(x[t])~~or~~italic(y[t])))
+lines(mod_fits, lwd = 2, type = "l", cex = 1.5, col = "black")
+lines(mod_fits_CI_hi, lwd = 2, type = "l", cex = 1.5, col = "gray")
+lines(mod_fits_CI_lo, lwd = 2, type = "l", cex = 1.5, col = "gray")
+```
+
+
+## Model fit with observations & states 
+
+```{r rw_plot_fit, align.fig="center"}
+par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
+plot.ts(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf",
+        las = 1, ylim = c(min(xx,yy), max(xx,yy)),
+        ylab = expression(italic(x[t])~~or~~italic(y[t])))
+lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870")
+lines(mod_fits, lwd = 2, type = "l", cex = 1.5, col = "black")
+lines(mod_fits_CI_hi, lwd = 2, type = "l", cex = 1.5, col = "gray")
+lines(mod_fits_CI_lo, lwd = 2, type = "l", cex = 1.5, col = "gray")
+```
+
+
+***
+
+# Model summaries
+
+In addition to accessing the various aspects contained in the list of a fitted object of class `marssMLE` returned by `MARSS()`, you can use some summary functions to obtain parameter estimates and model fits. You can also get a set of standard plots of the model fits and diagnostics. Here are a few of the options:
+
+* `coef(mod_fit)` to get the estimated parameters
+
+* `tidy(mod_fit)` to get estimated parameters with CIs
+
+* `fitted(mod_)` to get the model estimates of mean y
+
+* `plot(mod_fit)` to view a series of plots of the states, data, and diagnostics
+
+* `ggplot2::autoplot(mod_fit)` to view a series of ggplots of the states, data, and diagnostics
+
+
+***
+
+# Model diagnostics
+
+Just like other statistical models, state-space models come with their own set of assumptions. As such, it's a good idea to examine some model diagnostics to see if the assumptions have been met. For the univariate state-space models we're using here, the assumptions include the following:
+
+* The errors ($w_t$ and $v_t$) are normally distributed
+
+* The errors ($w_t$ and $v_t$) have constant variance
+
+* The errors ($w_t$ and $v_t$) are independent
+
+We can assess how well something fits a normal distribution via a q-q plot or `qqplot()`. We can use plots of the errors versus time to see if the variance changes. We can use the familiar autocorrelaction function `acf()` to assess whether the errors are independent over time.
+
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** The `plot()` and `ggplot2::autoplot()` functions produce useful diagnostic plots.
+</div>
+
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Use either `plot()` or `ggplot2::autoplot()` to see how well our fitted model meets the assumptions.
+</div>
+
+```{r model_diags, echo = TRUE, eval = FALSE}
+## get summary & diagnostic plots
+plot(mod_fit)
+```
+
+```{r model_diags_show, echo = FALSE}
+par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
+## get summary & diagnostic plots
+plot(mod_fit)
+```
+
