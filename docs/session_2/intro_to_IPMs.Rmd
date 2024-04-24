@@ -470,50 +470,90 @@ background-size: 85%
 
 ---
 
+class: center, middle
+
+# Can we use a hierarchical approach to improve forecast performance?
+
+
+---
+
 class: left
 background-image: url(figs/wa_coho_map.png)
 background-position: 50% 50%
 background-size: 45%
 
-.citation[]
+.citation.gray[DeFilippo et al. (2021) Fish Res]
+
 
 ---
 
-# Characterize uncertainty between steelhead
+background-image: url(figs/coho_pic.png)
+background-position: 90% 1%
+background-size: 40%
 
-## .blue[1) spawners and offspring]
+# WA natural-origin coho
 
-## .green[2) productivity and environmental conditions]
+### .blue[&#x2022; Eggs laid in brood year _y_] 
+
+--
+
+### .blue[&#x2022; Fry emerge in spring of year _y_ + 1]
+
+--
+
+### .blue[&#x2022; Most juveniles spend ~1 year in freshwater]
+
+--
+
+### .blue[&#x2022; Outmigrate as smolts in spring of year _y_ + 2]
+
+--
+
+### .blue[&#x2022; Most spend ~1.5 years at sea]
+
+--
+
+### .blue[&#x2022; Return to spawn in fall of year _y_ + 3]
+
 
 ---
 
-# Skagit River steelhead
+# Data types (1986-2017)
 
-## .right.blue[Escapement, harvest & age data from 1978-2018]
+### .blue[&#x2022; Quantity of habitat for each population (stream length)]
 
-## .right.green[Effects of streamflows & hatchery releases]
+--
+
+### .blue[&#x2022; Adult escapement counts]
+
+--
+
+### .blue[&#x2022; Adult harvest counts]
+
+--
+
+### .blue[&#x2022; Smolt outmigration counts]
+
+--
+
+### .blue[&#x2022; Coded wire tag marine survival estimates]
+
 
 ---
 
-# Integrated population model
+# Forecast evaluation
 
-## .blue.under[State model]
+### .blue[&#x2022; Initially fit to 16 years (1986-2001)]
 
-## .blue[Offspring] = f(.blue[Spawners], .green[Streamflows], .orange[Hatchery fish])
+--
 
----
+### .blue[&#x2022; Skill evaluated for next 16 years (2002-2017) with model refit each year]
 
-# Integrated population model
+--
 
-## .blue.under[State model]
+### .blue[&#x2022; Skill based on mean absolute scaled error (MASE)]
 
-## .blue[Offspring] = f(.blue[Spawners], .green[Streamflows], .orange[Hatchery fish])
-
-## .purple.under[Observation models]
-
-## .purple[Spawners] = g(.blue[Spawners], .gray[Harvest])
-
-## .purple[Ages] = h(.blue[Offspring])
+$$\Large ASE_{i, y}=\frac{\left|P_{i, y}-A_{i, y}\right|}{\frac{1}{n-1} \sum_1^n\left|A_{i, t}-A_{i, t-1}\right|}$$
 
 ---
 
@@ -522,6 +562,9 @@ background-position: 70% 50%
 background-size: 47%
 
 # Correlation in<br>marine survival
+
+.citation.gray[DeFilippo et al. (2021) Fish Res]
+
 
 ---
 
@@ -561,5 +604,14 @@ background-size: 30%
 .citation.gray[DeFilippo et al. (2021) Fish Res]
 
 
+---
+
+# Learn more about IPMs
+
+### https://github.com/lukasdefilippo/ST-IPM
+
+### https://github.com/mdscheuerell/steelhead_IPM
+
+### https://github.com/marksorel8/Sorel_etal_Wenatchee_IPM
 
 
