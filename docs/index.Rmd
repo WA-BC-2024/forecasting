@@ -50,7 +50,7 @@ Links are included after each topic.
 
 __8:00 - 9:40__ 
 
-  * topic 1 | [materials](session_1/lec_01.html)
+  * Overview | [slide deck](session_1/forecasting_overview.html)
   
   * topic 2 | [materials](session_1/lec_02.html)
 
