@@ -1,0 +1,194 @@
+---
+title: "Introduction to Forecasting"
+subtitle: "Predicting Salmon Returns"  
+author: 
+#  - "Mark Scheuerell"
+  - "WA-BC AFS Meeting<br>Spokane, WA<br><br>29 April 2024"
+output:
+  xaringan::moon_reader:
+    css: ["xaringan-themer.css", "my-theme.css"]
+    nature:
+      slideNumberFormat: ""
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      # countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=8, fig.height=4, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = FALSE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+
+## set random seed
+set.seed(666)
+
+## load {icons} for font awesome
+library(icons)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo(
+  primary_color = "#FFFFFF",
+  secondary_color = "#23395b",
+  # secondary_color = "#FF961C",
+  title_slide_text_color = "#FFFFFF",
+  title_slide_background_color = "#23395b",
+  colors = c(
+    red = "#f34213",
+    purple = "#844870",
+    orange = "#FF961C",
+    green = "#339933",
+    white = "#FFFFFF",
+    blue = "#488fdf",
+    aqua = "#80cdc1",
+    gray = "#808080",
+    lightgray = "#bdbdbd"
+),
+  header_font_google = google_font("Roboto Condensed", "400", "400i", "700"),
+  text_font_google = google_font("Cabin", "400", "400i", "700"),
+)
+```
+
+
+# Forecasting life cycle
+
+.pull-left[
+### .blue[Assess & understand objectives]
+]
+
+
+---
+
+# Forecasting life cycle
+
+.pull-left[
+### .blue[Assess & understand objectives]
+
+### .blue[Gather information]
+]
+
+
+---
+
+# Forecasting life cycle
+
+.pull-left[
+### .blue[Assess & understand objectives]
+
+### .blue[Gather information]
+
+### .blue[Decide on modeling framework]
+]
+
+---
+
+# Forecasting life cycle
+
+.pull-left[
+### .blue[Assess & understand objectives]
+
+### .blue[Gather information]
+
+### .blue[Decide on modeling framework]
+
+### .blue[Choose fitting & forecast horizons]
+]
+
+---
+
+# Forecasting life cycle
+
+.pull-left[
+### .blue[Assess & understand objectives]
+
+### .blue[Gather information]
+
+### .blue[Decide on modeling framework]
+
+### .blue[Choose fitting & forecast horizons]
+]
+
+.pull-right[
+### .blue[Fit model(s) & generate forecast(s)]
+]
+
+
+---
+
+# Forecasting life cycle
+
+.pull-left[
+### .blue[Assess & understand objectives]
+
+### .blue[Gather information]
+
+### .blue[Decide on modeling framework]
+
+### .blue[Choose fitting & forecast horizons]
+]
+
+.pull-right[
+### .blue[Fit model(s) & generate forecast(s)]
+
+### .blue[Evaluate skill]
+]
+
+
+---
+
+# Forecasting life cycle
+
+.pull-left[
+### .blue[Assess & understand objectives]
+
+### .blue[Gather information]
+
+### .blue[Decide on modeling framework]
+
+### .blue[Choose fitting & forecast horizons]
+]
+
+.pull-right[
+### .blue[Fit model(s) & generate forecast(s)]
+
+### .blue[Evaluate skill]
+
+### .blue[Report results]
+
+]
+
+
+---
+
+# Forecasting life cycle
+
+.pull-left[
+### .blue[Assess & understand objectives]
+
+### .blue[Gather information]
+
+### .blue[Decide on modeling framework]
+
+### .blue[Choose fitting & forecast horizons]
+]
+
+.pull-right[
+### .blue[Fit model(s) & generate forecast(s)]
+
+### .blue[Evaluate skill]
+
+### .blue[Report results]
+
+### .blue[Rinse & repeat]
+]
+
+
