@@ -68,7 +68,7 @@ __9:40 - 10:00__
 
 __10:00 - 12:00__
 
-  * State-Space Models | [slide deck](session_2/intro_to_SSMs.html)
+  * State-Space Models | [slide deck](session_2/intro_to_SSMs.html) | [R exercise](session_2/fitting_SSMs.html)
   
   * Integrated Population Models | [slide deck](session_2/intro_to_IPMs.html)
   
