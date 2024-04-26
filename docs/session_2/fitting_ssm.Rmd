@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
   fig.dim = c(8, 5),
   fig.align = "center"
   )
-set.seed(592)
+set.seed(429)
 ```
 
 ***
@@ -372,20 +372,6 @@ lines(mod_fits_CI_lo, lwd = 2, type = "l", cex = 1.5, col = "gray")
 ```
 
 
-## Model fit with observations & states 
-
-```{r rw_plot_fit, align.fig="center"}
-par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
-plot.ts(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf",
-        las = 1, ylim = c(min(xx,yy), max(xx,yy)),
-        ylab = expression(italic(x[t])~~or~~italic(y[t])))
-lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870")
-lines(mod_fits, lwd = 2, type = "l", cex = 1.5, col = "black")
-lines(mod_fits_CI_hi, lwd = 2, type = "l", cex = 1.5, col = "gray")
-lines(mod_fits_CI_lo, lwd = 2, type = "l", cex = 1.5, col = "gray")
-```
-
-
 ***
 
 # Model summaries
@@ -398,7 +384,7 @@ In addition to accessing the various aspects contained in the list of a fitted o
 
 * `fitted(mod_)` to get the model estimates of mean y
 
-* `plot(mod_fit)` to view a series of plots of the states, data, and diagnostics
+* `plot(mod_fit)` to view a series of base plots of the states, data, and diagnostics
 
 * `ggplot2::autoplot(mod_fit)` to view a series of ggplots of the states, data, and diagnostics
 
@@ -438,20 +424,39 @@ plot(mod_fit)
 
 # Forecasting
 
-```{r}
-## fit the model with first 30 data points
-mod_fit <- MARSS(y = YY, model = mod_list)
+Autoregressive models like the one we fit above can make good forecast models, especially if meaningful covariates can be included as well. The {MARSS} package uses a Kalman filtering algorithm for estimating model parameters, which generates three different forms of estimated states and observations for a discrete time series with $t = 1:T$:
 
-fY <- predict(mod_fit, type="ytt1")
+1) _prediction_, conditioned on the data from $1:(t - 1)$;
 
-fX <- predict(mod_fit, type="xtt1")
+2) _filtering_, conditioned on the data from $1:t$;
 
-fX$pred$estimate
+3) _smoothing_, conditioned on the data from $1:T$.
 
-kf <- MARSSkfas(mod_fit)
+By default, the `MARSS()` function produces the smoothed estimates (or "smoothations"), but in a forecasting context we want estimates conditioned on the data from $1:(t - 1)$, not $1:T$.
 
-kf$xtt1
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** We can use the `predict()` function to generate forecasts and associated uncertainty intervals.
+</div>
 
+```{r use_predict}
+fY <- predict(mod_fit,
+              level = 0.90,
+              type = "ytt1",
+              interval = "prediction")
+```
 
+<div class="boxy boxy-orange boxy-lightbulb">
+**Tip:** We can use the `plot()` or `ggplot2::autoplot()` functions to plot forecasts and their associated uncertainty intervals along with the data.
+</div>
+
+```{r, plot_forecasts}
+## load ggplot
+library(ggplot2)
+
+## create plot
+par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
+autoplot(fY, plot.par = list(theme = theme_minimal(), point.size = 2)) +
+  ggtitle("Forecast (black line), prediction interval (gray area) & data (blue points)") +
+  theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "inches"))
 ```
 
