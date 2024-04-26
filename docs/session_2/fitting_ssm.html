@@ -5892,10 +5892,16 @@ estimates conditioned on the data from <span class="math inline">\(1:(t
 <p><strong>Tip:</strong> We can use the <code>predict()</code> function
 to generate forecasts and associated uncertainty intervals.</p>
 </div>
-<pre class="r"><code>fY &lt;- predict(mod_fit,
-              level = 0.90,
-              type = &quot;ytt1&quot;,
-              interval = &quot;prediction&quot;)</code></pre>
+<div class="boxy boxy-blue boxy-clipboard-list">
+<p><strong>Task:</strong> Get the one-step ahead forecasts for the
+observed data based on our state-space model, along with the 90%
+prediction intervals.</p>
+</div>
+<pre class="r"><code>## get forecasts and associated prediction interval
+fY &lt;- predict(mod_fit,                  # use the fitted model object
+              level = 0.90,             # choose 90% for PI&#39;s
+              type = &quot;ytt1&quot;,            # shorthand for 1:(t-1)
+              interval = &quot;prediction&quot;)  # type of interval</code></pre>
 <div class="boxy boxy-orange boxy-lightbulb">
 <p><strong>Tip:</strong> We can use the <code>plot()</code> or
 <code>ggplot2::autoplot()</code> functions to plot forecasts and their
@@ -5905,7 +5911,6 @@ associated uncertainty intervals along with the data.</p>
 library(ggplot2)
 
 ## create plot
-par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
 autoplot(fY, plot.par = list(theme = theme_minimal(), point.size = 2)) +
   ggtitle(&quot;Forecast (black line), prediction interval (gray area) &amp; data (blue points)&quot;) +
   theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), &quot;inches&quot;))</code></pre>

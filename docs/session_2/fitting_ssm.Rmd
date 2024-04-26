@@ -438,11 +438,16 @@ By default, the `MARSS()` function produces the smoothed estimates (or "smoothat
 **Tip:** We can use the `predict()` function to generate forecasts and associated uncertainty intervals.
 </div>
 
+<div class="boxy boxy-blue boxy-clipboard-list">
+**Task:** Get the one-step ahead forecasts for the observed data based on our state-space model, along with the 90% prediction intervals. 
+</div>
+
 ```{r use_predict}
-fY <- predict(mod_fit,
-              level = 0.90,
-              type = "ytt1",
-              interval = "prediction")
+## get forecasts and associated prediction interval
+fY <- predict(mod_fit,                  # use the fitted model object
+              level = 0.90,             # choose 90% for PI's
+              type = "ytt1",            # shorthand for 1:(t-1)
+              interval = "prediction")  # type of interval
 ```
 
 <div class="boxy boxy-orange boxy-lightbulb">
@@ -454,7 +459,6 @@ fY <- predict(mod_fit,
 library(ggplot2)
 
 ## create plot
-par(mai = c(1.2, 1, 0.3, 0), omi = c(0, 0, 0.5, 1))
 autoplot(fY, plot.par = list(theme = theme_minimal(), point.size = 2)) +
   ggtitle("Forecast (black line), prediction interval (gray area) & data (blue points)") +
   theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "inches"))
