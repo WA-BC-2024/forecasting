@@ -293,13 +293,13 @@ background-size: 30%
 
 ## .blue[State model (autoregressive)]
 
-`\(\Large x_t = f(x_{t-1}, \text{process error})\)`
+`\(\LARGE x_t = f(x_{t-1}, \text{process error})\)`
 
 &lt;br&gt;
 
 ## .purple[Observation model]
 
-`\(\Large y_t = g(x_t, \text{observation error})\)`
+`\(\LARGE y_t = g(x_t, \text{observation error})\)`
 
 
 ---
@@ -308,13 +308,22 @@ background-size: 30%
 
 ## .blue[State model]
 
-`\(\Large x_t = x_{t-1} + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+`\(\LARGE x_t = x_{t-1} + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
 
 &lt;br&gt;
 
 ## .purple[Observation model]
 
-`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+
+
+---
+
+class: center
+
+# Examples of random walks
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_rw-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -323,13 +332,22 @@ background-size: 30%
 
 ## .blue[State model]
 
-`\(\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+`\(\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
 
 &lt;br&gt;
 
 ## .purple[Observation model]
 
-`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+
+
+---
+
+class: center
+
+# Examples of biased random walks
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_biased_rw-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -338,16 +356,27 @@ background-size: 30%
 
 ## .blue[State model]
 
-`\(\Large x_t = b x_{t-1} + w_t ~~~~~~~~~~ |b| &lt; 1 ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+`\(\LARGE x_t = b x_{t-1} + w_t ~~~~~~~~~~ |b| &lt; 1 ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
 
 &lt;br&gt;
 
 ## .purple[Observation model]
 
-`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
 
 
 ---
+
+class: center
+
+# Examples of mean-reverting models
+
+&lt;img src="intro_to_SSMs_files/figure-html/ex_AR1-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+class: center
 
 # Consider these data
 
@@ -360,32 +389,34 @@ background-size: 30%
 
 ## .blue[1) Linear regression] 
 
-`\(\Large y_t = \alpha + \beta t + e_t\)`
+`\(\LARGE y_t = \alpha + \beta t + e_t\)`
 
 &lt;br&gt;
 
 ## .green[2) Biased random walk]
 
-`\(\Large x_t = x_{t-1} + u + e_t\)`
+`\(\LARGE x_t = x_{t-1} + u + e_t\)`
 
 
 ---
 
-# Model options | Linear regression
+# Linear regression as a state-space model
 
 ## .blue[State model]
 
-`\(\Large x_t = \alpha + \beta t\)`
+`\(\LARGE x_t = \alpha + \beta t\)`
 
 &lt;br&gt;
 
 ## .purple[Observation model]
 
-`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
 
 ---
 
-# Linear regression fitted values
+class: center
+
+# Estimated state
 
 &lt;img src="intro_to_SSMs_files/figure-html/linear_regr-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
@@ -394,45 +425,35 @@ background-size: 30%
 
 ---
 
+class: center
+
 # Observation errors
 
-&lt;img src="intro_to_SSMs_files/figure-html/unnamed-chunk-15-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="intro_to_SSMs_files/figure-html/obs_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 &lt;!-- Errors `\(v_t = y_t - x_t\)` --&gt;
 
 
 ---
 
-# Model options | Biased random walk
+# Biased random walk as a state-space model
 
 ## .blue[State model]
 
-`\(\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+`\(\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
 
 &lt;br&gt;
 
 ## .purple[Observation model]
 
-`\(\Large y_t = x_t\)`
+`\(\LARGE y_t = x_t\)`
 
 
 ---
 
-# Examples of biased random walks
+class: center
 
-&lt;img src="intro_to_SSMs_files/figure-html/ex_biased_rw-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
-
-
----
-
-# Biased random walk
-
-&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_0-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
-
-
----
-
-# Biased random walk fit to earlier data
+# Estimated state
 
 &lt;img src="intro_to_SSMs_files/figure-html/biased_rw_fit-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
@@ -440,6 +461,8 @@ background-size: 30%
 
 
 ---
+
+class: center
 
 # Process errors
 
@@ -450,24 +473,24 @@ background-size: 30%
 
 ---
 
-# Model options | Biased random walk + obs error
+class: middle, center
+
+# What if we combined the two models?
+
+
+---
+
+# Biased random walk with observation error
 
 ## .blue[State model]
 
-`\(\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
+`\(\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)\)`
 
 &lt;br&gt;
 
 ## .purple[Observation model]
 
-`\(\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
-
-
----
-
-# Biased random walk
-
-&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+`\(\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)\)`
 
 
 ---
@@ -475,6 +498,13 @@ background-size: 30%
 # Biased random walk
 
 &lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_2-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Biased random walk
+
+&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---

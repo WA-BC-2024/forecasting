@@ -19,7 +19,7 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
   fig.width=8, fig.height=4, fig.retina=3,
-  out.width = "100%",
+  out.width = "90%",
   cache = FALSE,
   echo = FALSE,
   message = FALSE, 
@@ -430,13 +430,13 @@ background-size: 30%
 
 ## .blue[State model (autoregressive)]
 
-$\Large x_t = f(x_{t-1}, \text{process error})$
+$\LARGE x_t = f(x_{t-1}, \text{process error})$
 
 <br>
 
 ## .purple[Observation model]
 
-$\Large y_t = g(x_t, \text{observation error})$
+$\LARGE y_t = g(x_t, \text{observation error})$
 
 
 ---
@@ -445,158 +445,22 @@ $\Large y_t = g(x_t, \text{observation error})$
 
 ## .blue[State model]
 
-$\Large x_t = x_{t-1} + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+$\LARGE x_t = x_{t-1} + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
 
 <br>
 
 ## .purple[Observation model]
 
-$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
 
 
 ---
 
-# State-space model | Biased random walk
+class: center
 
-## .blue[State model]
+# Examples of random walks
 
-$\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
-
-<br>
-
-## .purple[Observation model]
-
-$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
-
-
----
-
-# State-space model | Mean-reverting
-
-## .blue[State model]
-
-$\Large x_t = b x_{t-1} + w_t ~~~~~~~~~~ |b| < 1 ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
-
-<br>
-
-## .purple[Observation model]
-
-$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
-
-
----
-
-# Consider these data
-
-```{r ex_bias_rw, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-TT <- 30
-
-uu <- -0.2
-  
-ww <- xx <- rnorm(TT)
-for(t in 2:TT) {
-  xx[t] <- xx[t-1] + uu + ww[t]
-}
-
-ee <- rnorm(TT)
-yy <- xx + ee
-
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
-plot.ts(yy, ylim = range(xx,yy),
-        lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
-        las = 1, ylab = expression(italic(y[t])))
-```
-
-
----
-
-# Two model options
-
-## .blue[1) Linear regression] 
-
-$\Large y_t = \alpha + \beta t + e_t$
-
-<br>
-
-## .green[2) Biased random walk]
-
-$\Large x_t = x_{t-1} + u + e_t$
-
-
----
-
-# Model options | Linear regression
-
-## .blue[State model]
-
-$\Large x_t = \alpha + \beta t$
-
-<br>
-
-## .purple[Observation model]
-
-$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
-
----
-
-# Linear regression fitted values
-
-```{r linear_regr, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-theta <- coef(lm(yy ~ seq(TT)))
-y_obs <- theta[1] + theta[2] * seq(TT)
-
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
-plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),
-        cex = 1.5, col = "#844870",
-        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
-lines(y_obs, lwd = 2, type = "o", pch = 16, col = "#488fdf")
-```
-
-<!-- All of the variance in $y_t$ is due to observation error -->
-
-
----
-
-# Observation errors
-
-```{r, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-theta <- coef(lm(yy ~ seq(TT)))
-y_obs <- theta[1] + theta[2] * seq(TT)
-
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
-plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),  
-        cex = 1.5, col = "#844870",
-        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
-lines(y_obs, lwd = 2, type = "o", pch = 16, col = "#488fdf")
-segments(seq(TT), y0 = y_obs, y1 = yy, col = "red")
-```
-
-<!-- Errors $v_t = y_t - x_t$ -->
-
-
----
-
-# Model options | Biased random walk
-
-## .blue[State model]
-
-$\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
-
-<br>
-
-## .purple[Observation model]
-
-$\Large y_t = x_t$
-
-
----
-
-# Examples of biased random walks
-
-```{r ex_biased_rw, fig.dim = c(8,4), dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-x1 <- cumsum(rnorm(30, 0.1, 0.3)) + 10
-
-x2 <- cumsum(rnorm(30, -0.1, 0.3)) + 10
+```{r ex_rw, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
 
 clr1 <- c("#f7fbff",
           "#deebf7",
@@ -608,6 +472,48 @@ clr1 <- c("#f7fbff",
           "#08519c",
           "#08306b")
 
+rr <- matrix(NA, 30, 9)
+for(i in 1:9) {
+  rr[,i] <- cumsum(rnorm(30, 0, 0.5))
+}
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+plot.ts(rr[,1], las = 1, col = "dodgerblue", lwd = 2, ylim = range(rr),
+        ylab = expression(italic(x[t])), main = "")
+# mtext("Positive bias", side = 3, line = 1, cex = 1.5)
+for(i in 9:3) {
+  lines(rr[,i],
+        col = clr1[i], lwd = 2)
+}
+```
+
+
+---
+
+# State-space model | Biased random walk
+
+## .blue[State model]
+
+$\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+
+---
+
+class: center
+
+# Examples of biased random walks
+
+```{r ex_biased_rw, fig.dim = c(9,4), dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+x1 <- cumsum(rnorm(30, 0.1, 0.3)) + 10
+
+x2 <- cumsum(rnorm(30, -0.1, 0.3)) + 10
+
 clr2 <- c("#fff5f0",
           "#fee0d2",
           "#fcbba1",
@@ -618,7 +524,7 @@ clr2 <- c("#fff5f0",
           "#a50f15",
           "#67000d")
 
-par(mfrow = c(1,2), mai = c(1, 1, 0.5, 0))
+par(mfrow = c(1,2), mai = c(1, 1, 0.5, 0), omi = c(0, 0, 0, 1))
 plot.ts(x1, las = 1, col = "dodgerblue", lwd = 2, ylim = c(8, 16),
         ylab = expression(italic(x[t])), main = "")
 mtext("Positive bias", side = 3, line = 1, cex = 1.5)
@@ -639,31 +545,165 @@ for(i in 9:3) {
 
 ---
 
-# Biased random walk
+# State-space model | Mean-reverting
 
-```{r brw_states_obs_0, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-xw <- rbind(cbind(seq(TT), xx), cbind(seq(TT)+0.5, xx+uu))
-xw <- xw[order(xw[,1]),]
-xw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
-  
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
-## blank slate
-plot.ts(yy, ylim = range(xx,yy), type = "n",
-        las = 1, ylab = expression(italic(x[t])))
-lines(xw[,1], xw[,2], lwd = 2, col = "gray")
-lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+## .blue[State model]
+
+$\LARGE x_t = b x_{t-1} + w_t ~~~~~~~~~~ |b| < 1 ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+
+---
+
+class: center
+
+# Examples of mean-reverting models
+
+```{r ex_AR1, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+mm <- matrix(rnorm(270), 30, 9)
+for(j in 1:9) {
+  for(i in 2:30)
+  mm[i, j] <- (10-j) / 10 * mm[i-1, j] + rnorm(1, 0, 1)
+}
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+plot.ts(mm[,1], las = 1, col = "dodgerblue", lwd = 2, ylim = range(mm),
+        ylab = expression(italic(x[t])), main = "")
+# mtext("Positive bias", side = 3, line = 1, cex = 1.5)
+for(i in 9:3) {
+  lines(mm[,i],
+        col = clr1[i], lwd = 2)
+}
 ```
 
 
 ---
 
-# Biased random walk fit to earlier data
+class: center
+
+# Consider these data
+
+```{r ex_bias_rw, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+TT <- 30
+
+uu <- -0.2
+  
+ww <- xx <- rnorm(TT)
+for(t in 2:TT) {
+  xx[t] <- xx[t-1] + uu + ww[t]
+}
+
+ee <- rnorm(TT)
+yy <- xx + ee
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+plot.ts(yy, ylim = range(xx,yy),
+        lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(y[t])))
+```
+
+
+---
+
+# Two model options
+
+## .blue[1) Linear regression] 
+
+$\LARGE y_t = \alpha + \beta t + e_t$
+
+<br>
+
+## .green[2) Biased random walk]
+
+$\LARGE x_t = x_{t-1} + u + e_t$
+
+
+---
+
+# Linear regression as a state-space model
+
+## .blue[State model]
+
+$\LARGE x_t = \alpha + \beta t$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+---
+
+class: center
+
+# Estimated state
+
+```{r linear_regr, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+theta <- coef(lm(yy ~ seq(TT)))
+y_obs <- theta[1] + theta[2] * seq(TT)
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),
+        cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+lines(y_obs, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+```
+
+<!-- All of the variance in $y_t$ is due to observation error -->
+
+
+---
+
+class: center
+
+# Observation errors
+
+```{r obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+theta <- coef(lm(yy ~ seq(TT)))
+y_obs <- theta[1] + theta[2] * seq(TT)
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),  
+        cex = 1.5, col = "#844870",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+lines(y_obs, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+segments(seq(TT), y0 = y_obs, y1 = yy, col = "red")
+```
+
+<!-- Errors $v_t = y_t - x_t$ -->
+
+
+---
+
+# Biased random walk as a state-space model
+
+## .blue[State model]
+
+$\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+
+<br>
+
+## .purple[Observation model]
+
+$\LARGE y_t = x_t$
+
+
+---
+
+class: center
+
+# Estimated state
 
 ```{r biased_rw_fit, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
         las = 1, ylab = expression(italic(y[t])))
-lines(yy, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+lines(yy, lwd = 2, type = "l", pch = 16, col = "#488fdf")
 ```
 
 <!-- All of the variance in $y_t$ is due to process error -->
@@ -671,14 +711,22 @@ lines(yy, lwd = 2, type = "o", pch = 16, col = "#488fdf")
 
 ---
 
+class: center
+
 # Process errors
 
 ```{r biased_rw_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+yw <- rbind(cbind(seq(TT), yy), cbind(seq(TT)+0.5, yy+uu))
+yw <- yw[order(yw[,1]),]
+yw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
+
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
         las = 1, ylab = expression(italic(y[t])))
-lines(yy, lwd = 2, type = "o", pch = 16, col = "#488fdf")
-segments(seq(2,TT), y0 = yy[-TT], y1 = yy[-1], col = "red")
+## bias
+lines(yw[,1], yw[,2], lwd = 2, col = "gray")
+lines(yy, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+segments(seq(2,TT), y0 = yy[-TT] + uu, y1 = yy[-1], col = "red")
 ```
 
 <!-- Errors: $w_t = y_t - y_{t-1}$ -->
@@ -686,17 +734,38 @@ segments(seq(2,TT), y0 = yy[-TT], y1 = yy[-1], col = "red")
 
 ---
 
-# Model options | Biased random walk + obs error
+class: middle, center
+
+# What if we combined the two models?
+
+
+---
+
+# Biased random walk with observation error
 
 ## .blue[State model]
 
-$\Large x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
+$\LARGE x_t = x_{t-1} + u + w_t ~~~~~~~~~~~ w_t \sim \text{N}(0,q)$
 
 <br>
 
 ## .purple[Observation model]
 
-$\Large y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+$\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
+
+
+---
+
+# Biased random walk
+
+```{r brw_states_obs_2, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## blank slate
+plot.ts(yy, ylim = range(xx,yy), type = "n",
+        las = 1, ylab = expression(italic(x[t])))
+## lines(xw[,1], xw[,2], type = "o", pch = 16, lwd = 2, col = "gray")
+lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+```
 
 
 ---
@@ -708,7 +777,7 @@ xw <- rbind(cbind(seq(TT), xx), cbind(seq(TT)+0.5, xx+uu))
 xw <- xw[order(xw[,1]),]
 xw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
   
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 ## blank slate
 plot.ts(yy, ylim = range(xx,yy), type = "n",
         las = 1, ylab = expression(italic(x[t])))
@@ -719,24 +788,10 @@ lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
 
 ---
 
-# Biased random walk
-
-```{r brw_states_obs_2, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
-## blank slate
-plot.ts(yy, ylim = range(xx,yy), type = "n",
-        las = 1, ylab = expression(italic(x[t])))
-## lines(xw[,1], xw[,2], type = "o", pch = 16, lwd = 2, col = "gray")
-lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
-```
-
-
----
-
 # Biased random walk with obs error
 
 ```{r brw_states_obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 plot.ts(yy, type = "n",
         las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
 lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
@@ -750,7 +805,7 @@ segments(seq(TT), y0 = xx, y1 = yy, col = "red")
 # Variance in $y_t$ is due to both process & obs error
 
 ```{r brw_states_obs_errors_2, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-par(mai = c(0.9,0.9,0.1,0.1), omi = c(0,0,0,0))
+par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 ## blank slate
 plot.ts(yy, ylim = range(xx,yy), type = "n",
         las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
