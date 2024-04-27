@@ -472,15 +472,16 @@ clr1 <- c("#f7fbff",
           "#08519c",
           "#08306b")
 
+## simulate RW's
 rr <- matrix(NA, 30, 9)
 for(i in 1:9) {
   rr[,i] <- cumsum(rnorm(30, 0, 0.5))
 }
 
+## plot them
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 plot.ts(rr[,1], las = 1, col = "dodgerblue", lwd = 2, ylim = range(rr),
         ylab = expression(italic(x[t])), main = "")
-# mtext("Positive bias", side = 3, line = 1, cex = 1.5)
 for(i in 9:3) {
   lines(rr[,i],
         col = clr1[i], lwd = 2)
@@ -510,9 +511,6 @@ class: center
 # Examples of biased random walks
 
 ```{r ex_biased_rw, fig.dim = c(9,4), dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-x1 <- cumsum(rnorm(30, 0.1, 0.3)) + 10
-
-x2 <- cumsum(rnorm(30, -0.1, 0.3)) + 10
 
 clr2 <- c("#fff5f0",
           "#fee0d2",
@@ -525,6 +523,10 @@ clr2 <- c("#fff5f0",
           "#67000d")
 
 par(mfrow = c(1,2), mai = c(1, 1, 0.5, 0), omi = c(0, 0, 0, 1))
+
+## pos bias
+x1 <- cumsum(rnorm(30, 0.1, 0.3)) + 10
+
 plot.ts(x1, las = 1, col = "dodgerblue", lwd = 2, ylim = c(8, 16),
         ylab = expression(italic(x[t])), main = "")
 mtext("Positive bias", side = 3, line = 1, cex = 1.5)
@@ -532,6 +534,9 @@ for(i in 9:3) {
   lines(cumsum(rnorm(30, 0.1, 0.3)) + 10,
         col = clr1[i], lwd = 2)
 }
+
+## neg bias
+x2 <- cumsum(rnorm(30, -0.1, 0.3)) + 10
 
 plot.ts(x2, las = 1, col = "indianred", lwd = 2,  ylim = c(4, 12),
         ylab = expression(italic(x[t])), main = "")
@@ -565,16 +570,17 @@ class: center
 # Examples of mean-reverting models
 
 ```{r ex_AR1, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+## simulate AR(1) models
 mm <- matrix(rnorm(270), 30, 9)
 for(j in 1:9) {
   for(i in 2:30)
   mm[i, j] <- (10-j) / 10 * mm[i-1, j] + rnorm(1, 0, 1)
 }
 
+## plot them
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 plot.ts(mm[,1], las = 1, col = "dodgerblue", lwd = 2, ylim = range(mm),
         ylab = expression(italic(x[t])), main = "")
-# mtext("Positive bias", side = 3, line = 1, cex = 1.5)
 for(i in 9:3) {
   lines(mm[,i],
         col = clr1[i], lwd = 2)
@@ -589,16 +595,24 @@ class: center
 # Consider these data
 
 ```{r ex_bias_rw, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+## length of ts
 TT <- 30
 
+## bias
 uu <- -0.2
   
+## process errors
 ww <- xx <- rnorm(TT)
+
+## biased RW
 for(t in 2:TT) {
   xx[t] <- xx[t-1] + uu + ww[t]
 }
 
+## obs errors
 ee <- rnorm(TT)
+
+## estimated data
 yy <- xx + ee
 
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
@@ -625,7 +639,7 @@ $\LARGE x_t = x_{t-1} + u + e_t$
 
 ---
 
-# Linear regression as a state-space model
+# 1) Linear regression as a state-space model
 
 ## .blue[State model]
 
@@ -644,17 +658,19 @@ class: center
 # Estimated state
 
 ```{r linear_regr, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+## regr coefs
 theta <- coef(lm(yy ~ seq(TT)))
+## y_hat
 y_obs <- theta[1] + theta[2] * seq(TT)
 
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## data
 plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),
         cex = 1.5, col = "#844870",
         las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## state/process
 lines(y_obs, lwd = 2, type = "l", pch = 16, col = "#488fdf")
 ```
-
-<!-- All of the variance in $y_t$ is due to observation error -->
 
 
 ---
@@ -664,23 +680,21 @@ class: center
 # Observation errors
 
 ```{r obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-theta <- coef(lm(yy ~ seq(TT)))
-y_obs <- theta[1] + theta[2] * seq(TT)
-
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## data
 plot.ts(yy, lwd = 2, type = "o", pch = 16, ylim = range(yy, y_obs),  
         cex = 1.5, col = "#844870",
         las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## state/process
 lines(y_obs, lwd = 2, type = "l", pch = 16, col = "#488fdf")
-segments(seq(TT), y0 = y_obs, y1 = yy, col = "red")
+## obs errors
+segments(seq(TT), y0 = y_obs, y1 = yy, lwd = 2, col = "red")
 ```
-
-<!-- Errors $v_t = y_t - x_t$ -->
 
 
 ---
 
-# Biased random walk as a state-space model
+# 2) Biased random walk as a state-space model
 
 ## .blue[State model]
 
@@ -700,13 +714,14 @@ class: center
 # Estimated state
 
 ```{r biased_rw_fit, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## data
 plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
         las = 1, ylab = expression(italic(y[t])))
+## state/process
 lines(yy, lwd = 2, type = "l", pch = 16, col = "#488fdf")
 ```
-
-<!-- All of the variance in $y_t$ is due to process error -->
 
 
 ---
@@ -721,15 +736,16 @@ yw <- yw[order(yw[,1]),]
 yw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
 
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
+## blank slate
 plot.ts(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870",
         las = 1, ylab = expression(italic(y[t])))
 ## bias
 lines(yw[,1], yw[,2], lwd = 2, col = "gray")
+## state/process
 lines(yy, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+## process errors
 segments(seq(2,TT), y0 = yy[-TT] + uu, y1 = yy[-1], col = "red")
 ```
-
-<!-- Errors: $w_t = y_t - y_{t-1}$ -->
 
 
 ---
@@ -756,62 +772,70 @@ $\LARGE y_t = x_t + v_t ~~~~~~~~~~~ v_t \sim \text{N}(0,r)$
 
 ---
 
-# Biased random walk
+class: center 
 
-```{r brw_states_obs_2, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+# Estimated state
+
+```{r brw_sssm_fit, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 ## blank slate
-plot.ts(yy, ylim = range(xx,yy), type = "n",
-        las = 1, ylab = expression(italic(x[t])))
-## lines(xw[,1], xw[,2], type = "o", pch = 16, lwd = 2, col = "gray")
-lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+plot.ts(yy, type = "n",
+        las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## data
+lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870")
+## state/process
+lines(xx, lwd = 2, type = "l", pch = 16, col = "#488fdf")
 ```
 
 
 ---
 
-# Biased random walk
+class: center 
 
-```{r brw_states_obs, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+# Process errors
+
+```{r brw_states_obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+## create ts of bias and process error
 xw <- rbind(cbind(seq(TT), xx), cbind(seq(TT)+0.5, xx+uu))
 xw <- xw[order(xw[,1]),]
 xw[,1] <- c(1, rep(seq(2, TT), ea = 2), TT)
-  
+
+## plot them
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 ## blank slate
-plot.ts(yy, ylim = range(xx,yy), type = "n",
-        las = 1, ylab = expression(italic(x[t])))
-lines(xw[,1], xw[,2], lwd = 2, col = "gray")
-lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
-```
-
-
----
-
-# Biased random walk with obs error
-
-```{r brw_states_obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
-par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 plot.ts(yy, type = "n",
         las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
-lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
+## bias plus errors
+lines(xw[,1], xw[,2], lwd = 2, col = "gray")
+## data
 lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "#844870")
-segments(seq(TT), y0 = xx, y1 = yy, col = "red")
+## state/process
+lines(xx, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+## process errors
+segments(seq(2,TT), y0 = xx[-TT] + uu, y1 = xx[-1], col = "red")
 ```
 
 
 ---
 
-# Variance in $y_t$ is due to both process & obs error
+class: center 
+
+# Observation errors
 
 ```{r brw_states_obs_errors_2, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE}
+
 par(mai = c(0.9,0.9,0.1,0.9), omi = c(0,0,0,0))
 ## blank slate
 plot.ts(yy, ylim = range(xx,yy), type = "n",
         las = 1, ylab = expression(italic(x[t])~~or~~italic(y[t])))
+## bias
 lines(xw[,1], xw[,2], lwd = 2, col = "gray")
-lines(xx, lwd = 2, type = "o", pch = 16, col = "#488fdf")
-segments(seq(TT), y0 = xx, y1 = yy, col = "red")
+## state
+lines(xx, lwd = 2, type = "l", pch = 16, col = "#488fdf")
+## obs errors
+segments(seq(TT), y0 = xx, y1 = yy, lwd = 2, col = "red")
+## data
 lines(yy, lwd = 2, type = "o", pch = 16, col = "#844870", cex = 1.5)
 ```
 
@@ -820,7 +844,7 @@ lines(yy, lwd = 2, type = "o", pch = 16, col = "#844870", cex = 1.5)
 
 class: middle
 
-> # .blue[How is it possible to separate out both the process and observation errors?]
+> # .blue[How is it possible to separate the process and observation errors?]
 
 > # .green[They have different temporal patterns]
 
@@ -828,6 +852,8 @@ class: middle
 ---
 
 ```{r ex_proc_obs_errors, dpi=300, out.height = "90%", out.width = "90%", fig.align = 'center', echo = FALSE, fig.dim = c(8,5)}
+
+## biased random walks
 xp <- matrix(NA, TT, 3)
 xp[1,] <- c(0,0,0)
 
@@ -835,8 +861,10 @@ for(t in 2:TT) {
   xp[t,] <- xp[t-1,] + uu + rnorm(3)
 }
 
+## add obs error
 yp <- xp[,1] + matrix(rnorm(TT*3), TT, 3)
 
+## plot them
 par(mfcol = c(2,3), mai = c(0.6,0.6,0.1,0), omi = c(0,0,0.2,0))
 for(i in 1:3) {
   plot.ts(xp[,i], xlab = "", ylab = expression(italic(x[t])),

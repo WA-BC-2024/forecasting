@@ -400,7 +400,7 @@ class: center
 
 ---
 
-# Linear regression as a state-space model
+# 1) Linear regression as a state-space model
 
 ## .blue[State model]
 
@@ -420,8 +420,6 @@ class: center
 
 &lt;img src="intro_to_SSMs_files/figure-html/linear_regr-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- All of the variance in `\(y_t\)` is due to observation error --&gt;
-
 
 ---
 
@@ -431,12 +429,10 @@ class: center
 
 &lt;img src="intro_to_SSMs_files/figure-html/obs_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- Errors `\(v_t = y_t - x_t\)` --&gt;
-
 
 ---
 
-# Biased random walk as a state-space model
+# 2) Biased random walk as a state-space model
 
 ## .blue[State model]
 
@@ -457,8 +453,6 @@ class: center
 
 &lt;img src="intro_to_SSMs_files/figure-html/biased_rw_fit-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- All of the variance in `\(y_t\)` is due to process error --&gt;
-
 
 ---
 
@@ -467,8 +461,6 @@ class: center
 # Process errors
 
 &lt;img src="intro_to_SSMs_files/figure-html/biased_rw_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
-
-&lt;!-- Errors: `\(w_t = y_t - y_{t-1}\)` --&gt;
 
 
 ---
@@ -495,28 +487,27 @@ class: middle, center
 
 ---
 
-# Biased random walk
+class: center 
 
-&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_2-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+# Estimated state
 
-
----
-
-# Biased random walk
-
-&lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="intro_to_SSMs_files/figure-html/brw_sssm_fit-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Biased random walk with obs error
+class: center 
+
+# Process errors
 
 &lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_errors-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Variance in `\(y_t\)` is due to both process &amp; obs error
+class: center 
+
+# Observation errors
 
 &lt;img src="intro_to_SSMs_files/figure-html/brw_states_obs_errors_2-1.png" width="90%" height="90%" style="display: block; margin: auto;" /&gt;
 
@@ -525,7 +516,7 @@ class: middle, center
 
 class: middle
 
-&gt; # .blue[How is it possible to separate out both the process and observation errors?]
+&gt; # .blue[How is it possible to separate the process and observation errors?]
 
 &gt; # .green[They have different temporal patterns]
 
