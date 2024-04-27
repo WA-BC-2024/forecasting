@@ -883,4 +883,89 @@ for(i in 1:3) {
 ```
 
 
+---
+
+# Model fitting: The Kalman filter
+
+### .blue[In the 1950s, Rudolf Kalman began developing a new algorithm for processing signals obtained from noisy sensors]
+
+--
+
+### .blue[In the 1960s, NASA used it for guidance & navigation computers<sup>*</sup> in Apollo missions]
+
+--
+
+### .blue[Now, the so-called "Kalman filter" is now widely used in statistics, aeronautics & robotics]
+
+.citation.gray[*Mark's laptop has 8 million times the RAM]
+
+
+---
+
+# Kalman filter: 3 types of estimates
+
+```{r KF_types, out.width = "90%", out.height = "90%"}
+## data for lines
+x <- seq(4)
+fore <- rep(3, 4)
+fltr <- rep(2, 4)
+smth <- rep(1, 4)
+
+par(mai = c(1, 2, 0.5, 2), omi = c(0, 0, 0, 0))
+## base
+matplot(x, cbind(fore, fltr, smth),
+     lty = "solid", lwd = 1.5, col = "gray",
+     xlim = c(1, 4), ylim = c(0.5, 3),
+     type = "o", pch = 16, cex = 2,
+     xaxt = "n", yaxt = "n", bty = "n", cex.axis = 1.5,
+     ylab = "", xlab = "Time", cex.lab = 1.5
+       )
+## t = reference
+abline(v = 3, lty = "dashed")
+## forecasting
+lines(x[1:2], fore[1:2], type = "o", pch = 16, cex = 2,
+      col = "dodgerblue")
+points(3, 3, pch = 16, cex = 2,
+      col = "gray")
+## filtering
+lines(x[1:3], fltr[1:3], type = "o", pch = 16, cex = 2,
+      col = "dodgerblue")
+## smoothing
+lines(x, smth, type = "o", pch = 16, cex = 2,
+      col = "dodgerblue")
+axis(1, at = seq(4),
+     labels = c("t-2", "t-1", "t", "t+1"),
+     cex.axis = 1.5)
+text(x = 0.7, y = 3,
+     labels = "Prediction", cex = 1.5,
+     pos = 2, xpd = NA)
+text(x = 0.7, y = 2,
+     labels = "Filter", cex = 1.5,
+     pos = 2, xpd = NA)
+text(x = 0.7, y = 1,
+     labels = "Smooth", cex = 1.5,
+     pos = 2, xpd = NA)
+```
+
+
+---
+
+# More information
+
+## [.purple[Time series course at UW (FISH 550)]](https://atsa-es.github.io/atsa/)
+
+## [.purple[eBook]](https://atsa-es.github.io/atsa-labs/)
+
+## [.purple[YouTube channel]](https://www.youtube.com/@SAFSTimeSeries)
+
+
+---
+
+class: frimg
+background-image: url(figs/SSM_review.png)
+background-position: 50% 50%
+background-size: 80%
+
+# More information
+
 
