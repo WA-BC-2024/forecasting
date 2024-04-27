@@ -18,7 +18,7 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
-  fig.width=8, fig.height=4, fig.retina=3,
+  fig.width=8, fig.height=4, fig.retina=3, fig.align = "center",
   out.width = "100%",
   cache = FALSE,
   echo = FALSE,
@@ -59,240 +59,430 @@ style_duo(
 ```
 
 
-# Forecasting life cycle
+# Forecasting strategy
 
 .pull-left[
-### .blue[Assess & understand objectives]
+### .blue[1) Assess & understand objectives]
 ]
 
 
 ---
 
-# Forecasting life cycle
+# 1) Assess & understand objectives
+
+### .blue[Who is involved?]
+
+--
+
+### .blue[Harvest vs conservation?]
+
+--
+
+### .blue[Escapement goal vs exploitation rate?]
+
+--
+
+### .blue[Pre-season vs in-season?]
+
+
+---
+
+# Forecasting strategy
 
 .pull-left[
-### .blue[Assess & understand objectives]
+### .green[1) Assess & understand objectives]
 
-### .blue[Gather information]
+### .blue[2) Gather information]
 ]
 
 
 ---
 
-# Forecasting life cycle
+# 2) Gather information
+
+### .blue[Who holds the data?]
+
+--
+
+### .blue[Harvest + escapement?]
+
+--
+
+### .blue[Age composition?]
+
+--
+
+### .blue[Smolts?]
+
+--
+
+### .blue[Environmental covariates?]
+
+
+---
+
+# Forecasting strategy
 
 .pull-left[
-### .blue[Assess & understand objectives]
+### .green[1) Assess & understand objectives]
 
-### .blue[Gather information]
+### .green[2) Gather information]
 
-### .blue[Decide on modeling framework]
+### .blue[3) Decide on modeling framework]
 ]
 
 ---
 
-# Forecasting life cycle
+# 3) Decide on modeling framework
+
+### .blue[Sibling regression vs environmental? Both?]
+
+--
+
+### .blue[Observation & process errors? (state-space)]
+
+--
+
+### .blue[Counts? Age comp? Mark-recapture? (integrated population model)]
+
+
+---
+
+# Forecasting strategy
 
 .pull-left[
-### .blue[Assess & understand objectives]
+### .green[1) Assess & understand objectives]
 
-### .blue[Gather information]
+### .green[2) Gather information]
 
-### .blue[Decide on modeling framework]
+### .green[3) Decide on modeling framework]
 
-### .blue[Choose fitting & forecast horizons]
+### .blue[4) Choose time horizons]
 ]
 
 ---
 
-# Forecasting life cycle
-
-.pull-left[
-### .blue[Assess & understand objectives]
-
-### .blue[Gather information]
-
-### .blue[Decide on modeling framework]
-
-### .blue[Choose fitting & forecast horizons]
-]
-
-.pull-right[
-### .blue[Fit model(s) & generate forecast(s)]
-]
-
-
----
-
-# Forecasting life cycle
-
-.pull-left[
-### .blue[Assess & understand objectives]
-
-### .blue[Gather information]
-
-### .blue[Decide on modeling framework]
-
-### .blue[Choose fitting & forecast horizons]
-]
-
-.pull-right[
-### .blue[Fit model(s) & generate forecast(s)]
-
-### .blue[Evaluate skill]
-]
-
-
----
-
-# Forecasting life cycle
-
-.pull-left[
-### .blue[Assess & understand objectives]
-
-### .blue[Gather information]
-
-### .blue[Decide on modeling framework]
-
-### .blue[Choose fitting & forecast horizons]
-]
-
-.pull-right[
-### .blue[Fit model(s) & generate forecast(s)]
-
-### .blue[Evaluate skill]
-
-### .blue[Report results]
-
-]
-
-
----
-
-# Forecasting life cycle
-
-.pull-left[
-### .blue[Assess & understand objectives]
-
-### .blue[Gather information]
-
-### .blue[Decide on modeling framework]
-
-### .blue[Choose fitting & forecast horizons]
-]
-
-.pull-right[
-### .blue[Fit model(s) & generate forecast(s)]
-
-### .blue[Evaluate skill]
-
-### .blue[Report results]
-
-### .blue[Rinse & repeat]
-]
-
-
----
-
-# Assess & understand objectives
-
-## .blue[Who is involved?]
-
---
-
-## .blue[Harvest vs conservation?]
-
---
-
-## .blue[Escapement goal vs exploitation rate?]
-
---
-
-## .blue[Pre- vs in-season?]
-
-
----
-
-# Gather information
-
-## .blue[Who holds the data?]
-
---
-
-## .blue[Harvest + escapement?]
-
---
-
-## .blue[Age composition?]
-
---
-
-## .blue[Smolts?]
-
---
-
-## .blue[Environmental covariates?]
-
-
----
-
-# Decide on modeling framework
-
-## .blue[Sibling regression vs environmental? Both?]
-
---
-
-## .blue[Observation & process errors? (state-space)]
-
---
-
-## .blue[Counts? Age-comp? Tags? (integrated population model)]
-
-
----
-
-# Choose fitting & forecast horizons
-
-```{r forecast_horizon, out.width = "80%", out.height = "80%"}
-
-
-
+# 4a) Choose time horizons | fitting vs forecasting
+
+```{r forecast_horizon, out.width = "90%", out.height = "90%"}
+
+# sz <- function(mu, var) {
+#   mu^2 / (var - mu)
+# }
+# 
+# sz(1000, 100000) ~= 10
+
+## data
+TT <- 30
+tt <- seq(TT)
+dd <- rnbinom(TT, mu = 15, size = 30)
+
+## plot
+par(mai = c(1, 1, 0.1, 1), omi = rep(0, 4))
+
+plot(
+  tt, dd,
+  type = "o", pch = 19,
+  cex = 1.5, cex.axis = 1.2, cex.lab = 1.5,
+  las = 1, bty = "n",
+  ylab = "Total returns (1000s)", xlab = "Time",
+  lwd = 2, col = "dodgerblue"
+)
+arrows(
+  x0 = 30, y0 = -2, x1 = 30, y1 = 0.5,
+  length = 0.1, angle = 25, code = 2,
+  col = "darkred", lwd = 2,
+  xpd = NA
+)
+text(
+  x = 30, y = -2, pos = 1,
+  labels = "We are here", cex = 1.5,
+  col = "darkred",
+  xpd = NA
+)
 ```
 
 
+---
+
+class: center
+
+# Balanced but perhaps overly optimistic
+
+```{r forecast_1515, out.width = "90%", out.height = "90%"}
+
+## plot
+par(mai = c(1, 1, 0.1, 1), omi = rep(0, 4))
+
+plot(
+  tt, dd,
+  type = "n", cex.axis = 1.2, cex.lab = 1.5,
+  las = 1, bty = "n",
+  ylab = "Total returns (1000s)", xlab = "Time"
+)
+## fitting
+lines(
+  tt[1:15], dd[1:15],
+  type = "o", pch = 19, cex = 1.5, lwd = 2,
+  col = "dodgerblue"
+)
+text(
+  x = 8, y = 25, pos = 1,
+  labels = "Fitting", cex = 1.5,
+  col = "dodgerblue",
+  xpd = NA
+)
+## prediction
+lines(
+  tt[16:TT], dd[16:TT],
+  type = "o", pch = 21, cex = 1.5, lwd = 2,
+  col = "dodgerblue", bg = "white"
+)
+text(
+  x = 23, y = 0, pos = 1,
+  labels = "Prediction", cex = 1.5,
+  col = "dodgerblue",
+  xpd = NA
+)
+```
+
 
 ---
 
-# Fit model(s) & generate forecast(s)
+class: center
 
-## .blue[Bayesian? Priors?]
+# Fitting-focused but evaluation challenged
 
---
+```{r forecast_2505, out.width = "90%", out.height = "90%"}
 
-## .blue[Software?]
+## plot
+par(mai = c(1, 1, 0.1, 1), omi = rep(0, 4))
+
+plot(
+  tt, dd,
+  type = "n", cex.axis = 1.2, cex.lab = 1.5,
+  las = 1, bty = "n",
+  ylab = "Total returns (1000s)", xlab = "Time"
+)
+## fitting
+lines(
+  tt[1:25], dd[1:25],
+  type = "o", pch = 19, cex = 1.5, lwd = 2,
+  col = "dodgerblue"
+)
+text(
+  x = 13, y = 25, pos = 1,
+  labels = "Fitting", cex = 1.5,
+  col = "dodgerblue",
+  xpd = NA
+)
+## prediction
+lines(
+  tt[26:TT], dd[26:TT],
+  type = "o", pch = 21, cex = 1.5, lwd = 2,
+  col = "dodgerblue", bg = "white"
+)
+text(
+  x = 28, y = 0, pos = 1,
+  labels = "Prediction", cex = 1.5,
+  col = "dodgerblue",
+  xpd = NA
+)
+```
 
 
 ---
 
-# Evaluate skill
+# 4b) Choose time horizons | steps ahead?
 
-## .blue[Accuracy?]
+```{r forecast_ahead, out.width = "90%", out.height = "90%"}
 
---
+## plot
+par(mai = c(1, 1, 0.1, 1), omi = rep(0, 4))
 
-## .blue[Precision?]
-
---
-
-## .blue[Formal model comparisons?]
+plot(
+  tt, dd,
+  type = "n", cex.axis = 1.2, cex.lab = 1.5,
+  las = 1, bty = "n",
+  ylab = "Total returns (1000s)", xlab = "Time"
+)
+## fitting
+lines(
+  tt[1:25], dd[1:25],
+  type = "o", pch = 19, cex = 1.5, lwd = 2,
+  col = "dodgerblue"
+)
+text(
+  x = 13, y = 25, pos = 1,
+  labels = "Fitting", cex = 1.5,
+  col = "dodgerblue",
+  xpd = NA
+)
+arrows(
+  x0 = 25, y0 = -2, x1 = 25, y1 = 0.5,
+  length = 0.1, angle = 25, code = 2,
+  col = "darkred", lwd = 2,
+  xpd = NA
+)
+text(
+  x = 25, y = -2, pos = 1,
+  labels = "We are here", cex = 1.5,
+  col = "darkred",
+  xpd = NA
+)
+## prediction
+points(
+  tt[26:TT], rep(17, 5),
+  pch = "?", cex = 1.5, lwd = 2,
+  col = "dodgerblue", bg = "white"
+)
+# text(
+#   x = 28, y = 0, pos = 1,
+#   labels = "Prediction", cex = 1.5,
+#   col = "dodgerblue",
+#   xpd = NA
+# )
+```
 
 
 ---
 
-# Report results
+# Forecasting strategy
 
-## .blue[Open and reproducible?]
+.pull-left[
+### .green[1) Assess & understand objectives]
+
+### .green[2) Gather information]
+
+### .green[3) Decide on modeling framework]
+
+### .green[4) Choose time horizons]
+]
+
+.pull-right[
+### .blue[5) Fit model & generate forecast]
+]
 
 
+---
+
+# 5) Fit model & generate forecast
+
+### .blue[Bayesian? Priors?]
+
+--
+
+### .blue[Software?]
+
+
+---
+
+# Forecasting strategy
+
+.pull-left[
+### .green[1) Assess & understand objectives]
+
+### .green[2) Gather information]
+
+### .green[3) Decide on modeling framework]
+
+### .green[4) Choose time horizons]
+]
+
+.pull-right[
+### .green[5) Fit model & generate forecast]
+
+### .blue[6) Evaluate fit & skill]
+]
+
+
+---
+
+# 6) Evaluate fit & skill
+
+### .blue[Accuracy & Precision?]
+
+--
+
+### .blue[Model comparisons? Versus naïve?]
+
+
+---
+
+# Forecasting strategy
+
+.pull-left[
+### .green[1) Assess & understand objectives]
+
+### .green[2) Gather information]
+
+### .green[3) Decide on modeling framework]
+
+### .green[4) Choose time horizons]
+]
+
+.pull-right[
+### .green[5) Fit model & generate forecast]
+
+### .green[6) Evaluate fit & skill]
+
+### .blue[7) Report results]
+
+]
+
+
+---
+
+# 7) Report results
+
+### .blue[Clearly communicated?]
+
+--
+
+### .blue[Uncertainties?]
+
+--
+
+### .blue[Open and reproducible?]
+
+
+---
+
+# Forecasting strategy
+
+.pull-left[
+### .green[1) Assess & understand objectives]
+
+### .green[2) Gather information]
+
+### .green[3) Decide on modeling framework]
+
+### .green[4) Choose time horizons]
+]
+
+.pull-right[
+### .green[5) Fit model & generate forecast]
+
+### .green[6) Evaluate fit & skill]
+
+### .green[7) Report results]
+
+### .blue[8) Refine & repeat]
+]
+
+
+---
+
+# 8) Refine & repeat
+
+### .blue[How did we do? Were mistakes made?]
+
+--
+
+### .blue[Update data & priors?]
+
+--
+
+### .blue[Update model(s)?]
 
 
