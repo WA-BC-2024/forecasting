@@ -1,12 +1,13 @@
 ---
 title: "Predicting Salmon Returns"
 subtitle: "A survey of existing models and an exploration of new methods for building better predictions"
-author: "<br>WA-BC Chapter of AFS"
+author: "<br>2024 WA-BC-Idaho AFS Joint Meeting"
+date: "Monday, April 29, 2024"
 output:
   html_document:
     fig_caption: yes
     theme: cerulean
-    toc: yes
+    toc: no
     toc_depth: 3
     toc_float: yes
 ---
@@ -29,22 +30,11 @@ Assistant Unit Leader | Washington Cooperative Fish and Wildlife Research Unit
 Associate Professor | School of Aquatic and Fishery Sciences  
 University of Washington  
 
-
-<br>
-
-## Date & Location
-
-Monday, April 29, 2024
-
-Riverfront A, Centennial Hotel
-
-Spokane, WA
-
-<br>
+***
 
 ## Schedule & Topics
 
-Links are included after each topic.
+Links to materials are included after each topic.
 
 ### Session 1 - Traditional Approaches
 
@@ -55,14 +45,10 @@ __8:00 - 9:40__
   * topic 2 | [materials](session_1/lec_02.html)
 
   * topic 3 | [materials](session_1/lec_03.html)
-  
-***
 
-#### Break
+### Break
 
 __9:40 - 10:00__
-
-***
 
 ### Session 2 - Contemporary Approaches
 
@@ -74,11 +60,6 @@ __10:00 - 12:00__
   
   * topic 6 | [materials](session_2/lec_06.html)
   
-***
-
-### Other resources
-
- * [Something here](URL)
 
 
  
