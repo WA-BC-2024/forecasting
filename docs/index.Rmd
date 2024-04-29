@@ -34,17 +34,17 @@ University of Washington
 
 ## Schedule & Topics
 
-Links to materials are included after each topic.
+Links to materials are included after each topic. (Note: Use the arrows keys to navigate through HTML versions of materials.)
 
 ### Session 1 - Traditional Approaches
 
 __8:00 - 9:40__ 
 
-  * Overview | [slide deck](session_1/forecasting_overview.html)
-  
-  * topic 2 | [materials](session_1/lec_02.html)
+  * Introductions 
 
-  * topic 3 | [materials](session_1/lec_03.html)
+  * Forecasting overview | [slide deck](session_1/forecasting_overview.html)
+  
+  * Model complexity, selection & evaluation | [slide deck](session_1/SalmonForecasting_ModelComplexitySelectionEvaluation.pptx) | [R exercise (LOOCV)](session_1/LOOCV.R) | [R exercise (Overfitting)](session_1/Overfitting.R)
 
 ### Break
 
@@ -54,12 +54,13 @@ __9:40 - 10:00__
 
 __10:00 - 12:00__
 
-  * State-Space Models | [slide deck](session_2/intro_to_SSMs.html) | [R exercise](session_2/fitting_SSMs.html)
+  * State-Space Models | [slide deck](session_2/intro_to_SSMs.html) | [R exercise (SSM)](session_2/fitting_ssm.html)
   
   * Integrated Population Models | [slide deck](session_2/intro_to_IPMs.html)
   
-  * topic 6 | [materials](session_2/lec_06.html)
+  * Risk-adverse decision making | [slide deck](session_2/SalmonForecasting_DecisionMaking.pptx)
   
+<br><br>
 
 
  
